@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h1>create an account</h1>
-	<form metho="post" action="RegisterProcess.jsp">
+	<form method="post" action="RegisterProcess.jsp">
 		username:<input type="text" name="username">
 		<br>
 		password:<input type="password" name="password">

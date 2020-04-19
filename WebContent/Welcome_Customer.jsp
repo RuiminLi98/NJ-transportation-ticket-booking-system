@@ -15,6 +15,8 @@
 	<%
 		out.println("welcome: " + session.getAttribute("type") + " " +session.getAttribute("username")); 
  	%>
-	<a href="Logout.jsp">Logout</a>
+ 	
+	<input type="button" value="Search" onClick="window.location.href='Search.jsp'"> 
+	<input type="button" value="Logout" onClick="window.location.href='Logout.jsp'"> 
 </body>
 </html>
