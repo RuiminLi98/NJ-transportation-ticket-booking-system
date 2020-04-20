@@ -23,4 +23,5 @@
 	<input type="submit" value="submit"><a href="customer_register.jsp">create account</a>
 </form>
 </body>
+
 </html>
