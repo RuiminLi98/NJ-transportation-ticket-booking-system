@@ -38,12 +38,19 @@
 					result.close();
 					if(success){
 						String depart = request.getParameter("Origin");
+						session.setAttribute("Origin", depart);
 						String arrival = request.getParameter("Destination");
+						session.setAttribute("Destination", arrival);
 						String ticketClass = request.getParameter("Class");
+						session.setAttribute("Class",ticketClass);
 						int seatnum = Integer.parseInt(request.getParameter("seat_number"));
+						session.setAttribute("seat_number", seatnum);
 						String type = request.getParameter("Type");
+						session.setAttribute("Type",type);
 						String discount = request.getParameter("Discount");
+						session.setAttribute("Discount",discount);
 						String representative = request.getParameter("Representative");
+						session.setAttribute("Representative",representative);
 						String[] splited = representative.split(" ");
 						String repFirstName = splited[0];
 						String repLastName = splited[1];
@@ -61,7 +68,6 @@
 						int destination_id = reservation.getInt(8);
 						Date origin_date = reservation.getDate(4);
 						Date destination_date = reservation.getDate(5);
-						
 						ResultSet econFare = stmt.executeQuery("SELECT * FROM TrainTicketing.Economy_fare where transit_line_name =‘"+reservation.getString("Trainsit_line_name")+"’;");
 						ResultSet bussFare = stmt.executeQuery("SELECT * FROM TrainTicketing.Business_fare where transit_line_name =‘"+reservation.getString("Trainsit_line_name")+"’;");
 						ResultSet firstFare = stmt.executeQuery("SELECT * FROM TrainTicketing.First_fare where transit_line_name =‘"+reservation.getString("Trainsit_line_name")+"’;");
@@ -111,11 +117,24 @@
 						discountRs.close();
 						total_fare = fare*discountNum*seatnum;
 						String insertQuery="INSERT INTO TrainTicketing.Reservation(total_fare,seat_number, class, booking_fare, reservation_date,dep_Train_ID, dep_Transit_line_name, dep_Station_ID, dep_Date, arr_Transit_line_name, arr_Station_ID, arr_date, assist_representative_SSN, customer_Username) values ("+total_fare+","+seatnum+",'"+ticketClass+"',"+today+","+train_id+",'"+train_line_name+"',"+origin_id+","+origin_date+","+train_id+",'"+train_line_name+"',"+destination_id+","+destination_date+","+ssn+",'"+username_str+"');";
-						ResultSet insert = stmt.executeQuery(insertQuery);
-						insert.close();
-						stmt.close();
-						con.close();
-						response.sendRedirect("ViewReservation.jsp");
+						
+						String findSeat = "SELECT total_number_of_seats FROM TrainTicketing.Train WHERE train_ID="+train_id+";";
+						ResultSet oldSeat = stmt.executeQuery(findSeat);
+						int oldSeatNum = oldSeat.getInt(1);
+						int newSeatNum = oldSeatNum - seatnum;
+						oldSeat.close();
+						if(newSeatNum < 0){
+							out.print("I can reserve at most "+oldSeatNum+ " seats.");
+							stmt.close();
+							con.close();
+							return;
+						}else{
+							String updateSeat = "UPDATE TrainTicketing.Train SET total_number_of_seats="+newSeatNum+";";
+							int insert = stmt.executeUpdate(insertQuery);
+							stmt.close();
+							con.close();
+							response.sendRedirect("SuccessfulReservation.jsp");
+						}
 					}else{
 						out.print("login failed");
 					}

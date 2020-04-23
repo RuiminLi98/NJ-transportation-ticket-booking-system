@@ -6,6 +6,9 @@
 	ResultSet allCitySet = null;
 	ResultSet date = null;
 	ResultSet representative=null;
+	ResultSet available = null;
+	boolean selected = true;
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -14,16 +17,17 @@
 <title>Reservation</title>
 </head>
 
-	<%	/* String username_str = session.getAttribute("username").toString();
-	if(username_str == null || username_str.isEmpty()){
-			out.print("username is empty, please log in with correct information or create a new account");
-	} */
+	<%	
+		if(session.getAttribute("username") == null){
+			out.print("Please log in first.");
+			response.sendRedirect("Login.jsp");
+			} 
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();
 		
 			Statement stmt = con.createStatement();
 			allCitySet = stmt.executeQuery("SELECT city,state FROM TrainTicketing.Station;");
-	
+			
 	%>
 	<form method="post" action="reservationProcess.jsp">
 	<h1>Reservation</h1>
@@ -33,6 +37,7 @@
 			<option><%= allCitySet.getString(1) + "-" + allCitySet.getString(2) %></option>
 		<%}%> 
 		</select>
+		
 		<br>
 		<b>Destination:</b>
 		<select name="Destination">
@@ -45,10 +50,38 @@
 	
 		<%
 			allCitySet.close();
-			date = stmt.executeQuery("SELECT departure_time FROM TrainTicketing.Train_schedule;");
 		%>
 		</select>
-
+		<%
+			String origin_info = request.getParameter("Origin");
+			String destination_info = request.getParameter("Destination");
+			if(origin_info == null && destination_info == null) selected = false;
+			else{ 
+				PreparedStatement ps = con.prepareStatement(Tools.big_query);
+				ps.setString(1, origin_info.split("-")[0]);
+				ps.setString(2, destination_info.split("-")[0]);
+				available = ps.executeQuery();
+			}
+			date = stmt.executeQuery("SELECT departure_time FROM TrainTicketing.Train_schedule");
+		%>
+		
+		<br>
+		<b>Departure Date</b>
+		<select name="Date">
+		<%if(selected){ %>
+			<% while(available.next()){	
+			%>	
+				<option><%=available.getTimestamp(4)%></option>
+			<%}%>
+			<% available.close();%>
+		<%}else{ %>
+			<% while(date.next()) {%>
+				<option><%=date.getTimestamp(1)%></option>
+			<%} %>
+			<%date.close(); %>
+		<%} %>
+		</select>
+			
 		<br>
 		<b>Class:</b>
 		<select name="Class">
@@ -88,10 +121,9 @@
 			%>
 			<% while(representative.next()){ %>
 				<option><%= representative.getString(1) + " " + representative.getString(2) %> </option>
-			<%} %>
-			<%
-				representative.close();
-			%>
+			<%}%>
+			<%representative.close();%>
+		
 		</select>
 		</form>
 	    <input type="submit" value="submit">

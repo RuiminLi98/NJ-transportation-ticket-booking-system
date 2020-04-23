@@ -10,7 +10,7 @@ String destination=null;
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="ISO-8859-1">
 <title>My Reservation</title>
 </head>
 <body>
@@ -33,24 +33,24 @@ String destination=null;
 				//Create a SQL statement
 				Statement stmt = con.createStatement();
 				String username = request.getParameter("username");
-				rs = stmt.executeQuery("SELECT dep_Station_ID, arr_Station_ID, dep_date, arr_date FROM TrainTicketing.Reservation WHERE customer_username ='"+username+"';");
+				rs = stmt.executeQuery("SELECT reservation_number,dep_Station_ID, arr_Station_ID, dep_date, arr_date FROM TrainTicketing.Reservation WHERE customer_username ='"+username+"';");
 			%> 
 			<% while(rs.next()){%>
 				<tr>
 					<%
-						int origin_id = rs.getInt(1);
+						int origin_id = rs.getInt(2);
 						ResultSet origin_rs = stmt.executeQuery("SELECT city, state FROM TrainTicketing.Station WHERE station_ID ="+origin_id+";");
 						origin = origin_rs.getString(1);
-						int destination_id = rs.getInt(2);
+						int destination_id = rs.getInt(3);
 						ResultSet destination_rs = stmt.executeQuery("SELECT city,state FROM TrainTicketing.Station="+destination_id+";");
 						destination = destination_rs.getString(1);
 					%>
 					<td><%=origin %></td>
 					<td><%=destination%></td>
-					<td><%=rs.getDate(3)%></td>
 					<td><%=rs.getDate(4)%></td>
-					<td> <a href="EditReservation.jsp">Edit</a></td>
-					<td> <a href="DeleteReservation.jsp">Delete</a></td>
+					<td><%=rs.getDate(5)%></td>
+					<td> <a href="EditReservation.jsp?id=<%=rs.getInt(1)%>">Edit</a></td>
+					<td> <a href="DeleteReservation.jsp?id=<%=rs.getInt(1)%>">Cancel</a></td>
 				</tr>
 			<%} %>
 		</table>

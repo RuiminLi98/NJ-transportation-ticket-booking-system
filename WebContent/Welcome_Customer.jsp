@@ -1,8 +1,3 @@
-<%
-    String redirectURL = "Login.jsp";
-	if(session.getAttribute("username") == null){response.sendRedirect(redirectURL);}
-%>
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -15,8 +10,9 @@
 	<%
 		out.println("welcome: " + session.getAttribute("type") + " " +session.getAttribute("username")); 
  	%>
- 	
-	<input type="button" value="Search" onClick="window.location.href='Search.jsp'"> 
-	<input type="button" value="Logout" onClick="window.location.href='Logout.jsp'"> 
+ 	<br>
+	<a href="Reservation.jsp">Make a Reservation</a>
+	<br>
+	<a href="Logout.jsp">Logout</a>
 </body>
 </html>
