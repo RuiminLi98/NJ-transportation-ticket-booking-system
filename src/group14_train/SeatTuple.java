@@ -2,7 +2,7 @@ package group14_train;
 
 import java.sql.Timestamp;
 
-public class SeatTuple {
+public class SeatTuple{
 	private int train_ID;
 	private String Transit_line_name;
 	private int occupied_seat_num;

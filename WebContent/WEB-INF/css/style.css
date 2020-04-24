@@ -19,6 +19,7 @@ table{
 table, td, th
 {
 	border:1px #F8B8BA;
+	font-weight: bold;
 }
 
 th
@@ -41,6 +42,7 @@ select{
             -moz-appearance: none;
             padding-left: 60px;
             background-color: #F8B8BA;
+            font-weight: bold;
             
  }
  
@@ -49,9 +51,12 @@ input {
 	color: #F8B8BA;  
 	display: inline-block;
 	text-align: center;
+	font-weight: bold;
+
 }
 
  option{
  	font-family:Century Gothic;
 	color: white;
  }
+ 
