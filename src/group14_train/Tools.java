@@ -89,7 +89,7 @@ public class Tools {
 		    Calendar c = Calendar.getInstance();
 		    c.setTime(dateFormat.parse(dt));
 		    c.add(Calendar.DATE, i);  // number of days to add
-		    if(c.before(current_time))	continue;
+		    //if(c.before(current_time))	continue;
 		    dt = dateFormat.format(c.getTime());  // dt is now the new date
 		    user_dates.add(dt);
 	    }

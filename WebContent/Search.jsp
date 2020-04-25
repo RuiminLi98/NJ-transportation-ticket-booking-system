@@ -73,7 +73,7 @@
 </form>
 <%
 	ResultSet reservation_count = 
-	stmt.executeQuery("select dep_Train_ID, dep_Transit_line_name, count(*), dep_date from Reservation group by dep_Train_ID, dep_Transit_line_name, dep_date;");
+	stmt.executeQuery("select dep_Train_ID, dep_Transit_line_name, sum(seat_number), dep_date from Reservation group by dep_Train_ID, dep_Transit_line_name, dep_date;");
 
 %>
 
