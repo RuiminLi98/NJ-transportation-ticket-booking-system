@@ -89,7 +89,6 @@ public class Tools {
 		    Calendar c = Calendar.getInstance();
 		    c.setTime(dateFormat.parse(dt));
 		    c.add(Calendar.DATE, i);  // number of days to add
-		    //if(c.before(current_time))	continue;
 		    dt = dateFormat.format(c.getTime());  // dt is now the new date
 		    user_dates.add(dt);
 	    }
@@ -109,6 +108,16 @@ public class Tools {
 						continue;
 					}
 				}
+				
+				//filter valid time
+				QueryResultTuple candidate = info_tuple.clone();
+
+				Calendar candidate_calender = Calendar.getInstance();
+				candidate_calender.setTime(dateFormat.parse(candidate.getDate()));
+				candidate_calender.set(Calendar.HOUR_OF_DAY, candidate.getOrigin_departure_time().getHours());
+				candidate_calender.set(Calendar.MINUTE, candidate.getOrigin_departure_time().getMinutes());
+				candidate_calender.set(Calendar.SECOND, candidate.getOrigin_departure_time().getSeconds());
+				if(candidate_calender.before(current_time))	continue;
 				processed.add(info_tuple.clone());
 			}
 		}

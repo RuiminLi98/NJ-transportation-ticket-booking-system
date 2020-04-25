@@ -50,24 +50,24 @@
         
         <b>Sorting by:</b>
         <select name="sort">
-				<option value="train_ID">train_ID</option>
-				<option value="line_name">line name</option>
-				<option value="origin_arrival_time">origin_arrival_time</option>
-				<option value="origin_departure_time">origin_departure_time</option>
-				<option value="destination_arrival_time">destination_arrival_time</option>
-				<option value="destination_departure_time">destination_departure_time</option>
-				<option value="economy_fare">economy fare</option>
-				<option value="business_fare">business fare</option>
-				<option value="first fare">first fare</option>
-				<option value="origin_name">origin name</option>
-				<option value="destination_name">destination name</option>
-				<option value="available">available</option>
-				<option value="date">date</option>
+				<option value="train_ID" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("train_ID"))? "selected" : "" %>>train_ID</option>
+				<option value="line_name" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("line_name"))? "selected" : "" %>>line name</option>
+				<option value="origin_arrival_time" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("origin_arrival_time"))? "selected" : "" %>>origin_arrival_time</option>
+				<option value="origin_departure_time" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("origin_departure_time"))? "selected" : "" %>>origin_departure_time</option>
+				<option value="destination_arrival_time" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("destination_arrival_time"))? "selected" : "" %>>destination_arrival_time</option>
+				<option value="destination_departure_time" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("destination_departure_time"))? "selected" : "" %>>destination_departure_time</option>
+				<option value="economy_fare" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("economy_fare"))? "selected" : "" %>>economy fare</option>
+				<option value="business_fare" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("business_fare"))? "selected" : "" %>>business fare</option>
+				<option value="first fare" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("first fare"))? "selected" : "" %>>first fare</option>
+				<option value="origin_name" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("origin_name"))? "selected" : "" %>>origin name</option>
+				<option value="destination_name" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("destination_name"))? "selected" : "" %>>destination name</option>
+				<option value="available" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("available"))? "selected" : "" %>>available</option>
+				<option value="date" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("date"))? "selected" : "" %>>date</option>
 		</select>
-		<input type="date" id="start" name="depature_date" value=<%= Tools.getTodayDateString() %>>        
+		<input type="date" id="start" name="depature_date" value=<%= request.getParameter("depature_date") == null? Tools.getTodayDateString() : request.getParameter("depature_date") %> min=<%=Tools.getTodayDateString() %>>        
 		
         <b>approximate search date:</b>
-		<input type="checkbox" value="true" name="approximate" />
+		<input type="checkbox" value="true" name="approximate" <%= request.getParameter("approximate") != null? "checked" : "" %>/>
 		
 		<input type="submit" value="search">
 </form>
