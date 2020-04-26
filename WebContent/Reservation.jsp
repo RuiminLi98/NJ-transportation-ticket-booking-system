@@ -1,6 +1,7 @@
+<style><%@include file="/WEB-INF/css/reservation.css"%></style>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="group14_train.*"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*,java.util.Date, java.text.SimpleDateFormat"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <% 
 	ResultSet allCitySet = null;
@@ -31,15 +32,16 @@
 	%>
 	<form method="post" action="reservationProcess.jsp">
 	<h1>Reservation</h1>
-		<b>Origin:</b>
+
+		<div><b>Origin:</b></div>
 		<select name="Origin">
 		<% while(allCitySet.next()){%>
 			<option><%= allCitySet.getString(1) + "-" + allCitySet.getString(2) %></option>
 		<%}%> 
 		</select>
-		
+	
 		<br>
-		<b>Destination:</b>
+		<div><b>Destination:</b></div>
 		<select name="Destination">
 		<%
 			allCitySet = stmt.executeQuery("SELECT city,state FROM TrainTicketing.Station;");	
@@ -62,12 +64,31 @@
 				ps.setString(2, destination_info.split("-")[0]);
 				available = ps.executeQuery();
 			}
-			date = stmt.executeQuery("SELECT departure_time FROM TrainTicketing.Train_schedule");
+			date = stmt.executeQuery("SELECT departure_time FROM TrainTicketing.Stop");
 		%>
 		
 		<br>
-		<b>Departure Date</b>
+		<div><b>Departure Date</b></div>
 		<select name="Date">
+			<%
+				Date today = new Date();
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				String todaydate = formatter.format(today);%>
+				<option><%=todaydate%></option>
+				<% for(int i=1; i<=20; i++){
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(today);
+					cal.add(Calendar.DATE,i);
+					String temp = formatter.format(cal.getTime());
+				%>
+				<option><%=temp %></option>
+				
+			<%} %>
+		
+		
+		</select>
+		<%-- <input type="date" name="Date" value =<%=LocalDate.now().toString() %> min=LocalDate.now() max=LocalDate.now().plusDays(30) > --%>
+		<%-- <select name="Date">
 		<%if(selected){ %>
 			<% while(available.next()){	
 			%>	
@@ -76,14 +97,15 @@
 			<% available.close();%>
 		<%}else{ %>
 			<% while(date.next()) {%>
-				<option><%=date.getTimestamp(1)%></option>
+				<%if(date.getTimestamp(1) != null){ %>
+					<option><%=date.getTimestamp(1)%></option>
+				<%} %>
 			<%} %>
 			<%date.close(); %>
 		<%} %>
-		</select>
-			
+		</select> --%>
 		<br>
-		<b>Class:</b>
+		<div><b>Class:</b></div>
 		<select name="Class">
 			<option>Economy</option>
 			<option>Business</option>
@@ -91,10 +113,10 @@
 		</select>
 		
 		<br>
-		<b>Number of Ticket:</b><input type="number",name="seat_number">
+		<div><b>Number of Ticket:</b></div><input type="number" name="seat_number" min= 1 required>
 		
 		<br>
-		<b>Type:</b>
+		<div><b>Type:</b></div>
 		<select name="Type">
 			<option>One Way</option>
 			<option>Round Trip</option>
@@ -104,7 +126,7 @@
 		
 		
 		<br>
-		<b>Discount:</b>
+		<div><b>Discount:</b></div>
 		<select name="Discount">
 			<option>None</option>
 			<option>Senior</option>
@@ -113,7 +135,7 @@
 		</select>
 		
 		<br>
-		<b>Did any representative help you:</b>
+		<div><b>Did any representative help you:</b></div>
 		<select name="Representative">
 			<option>None</option>
 			<%
@@ -125,9 +147,9 @@
 			<%representative.close();%>
 		
 		</select>
-		</form>
+		<br>
 	    <input type="submit" value="submit">
-	
+	</form>
 	
 	
 	

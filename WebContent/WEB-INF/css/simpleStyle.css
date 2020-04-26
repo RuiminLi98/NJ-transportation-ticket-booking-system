@@ -1,0 +1,23 @@
+@charset "ISO-8859-1";
+
+html, body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    padding: 35px;
+    text-align: center;
+    border-spacing: 0 20px;
+}
+
+a{
+	text-align: center;
+	border-spacing: 0 20px;
+	
+}
