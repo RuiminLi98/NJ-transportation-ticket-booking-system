@@ -16,7 +16,8 @@
 		if(username_str == null || password_str == null || user_type_str == null
 				|| username_str.isEmpty() || password_str.isEmpty()){
 			out.print("username, password or user_type is empty");
-		}else{
+		}else{			
+			
 			//get database connection
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();
