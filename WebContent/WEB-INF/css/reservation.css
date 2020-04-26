@@ -1,0 +1,28 @@
+@charset "ISO-8859-1";
+h1{
+	text-align:center;
+}
+
+div{
+	font-family:Century Gothic;
+    text-align:center;
+	display: block;
+    margin: 0 auto;
+}
+
+select{
+		font-family:Century Gothic;
+        line-height: 40px;
+		text-align:center;
+		display: block;
+    	margin: 0 auto;
+          
+ }
+ 
+input {
+	text-align: center;
+	display: inline-block;
+	display: block;
+    margin: 0 auto;
+}
+
