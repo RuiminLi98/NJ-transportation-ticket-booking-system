@@ -11,9 +11,11 @@
 		out.println("welcome: " + session.getAttribute("type") + " " +session.getAttribute("username")); 
  	%>
  	<br>
-	<a href="Search.jsp">search</a>
- 	<br>
+	<a href="Search.jsp">Search</a>
+	<br>
 	<a href="Reservation.jsp">Make a Reservation</a>
+	<br>
+	<a href="ViewReservation.jsp">View My Reservation</a>
 	<br>
 	<a href="Logout.jsp">Logout</a>
 </body>

@@ -9,7 +9,7 @@
 </head>
 <body>
 <%
-		out.println("You have successfully made a reservation!"); 
+		out.println("Invalid Selection of Stops."); 
 %>
 <br>
 <a href="ViewReservation.jsp">View Reservation</a>

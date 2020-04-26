@@ -1,25 +1,28 @@
+<style><%@include file="/WEB-INF/css/blackStyle.css"%></style>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="group14_train.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*,java.sql.Date,java.text.SimpleDateFormat"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
-<% 	
-	double discountNum = 1.0;
-	double fare = 0.0;
-	double total_fare = 0.0;
+<%
+double discountNum = 1.0;
+double fare = 0.0;
+double total_fare = 0.0;
+
 %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
-	<% 
+
+			<% 
 				ApplicationDB db = new ApplicationDB();	
 				Connection con = db.getConnection();
-				
 				//Create a SQL statement
 				Statement stmt = con.createStatement();
+				int rsid = Integer.parseInt(request.getParameter("reservation_num"));
 				String user_type_str = (String)session.getAttribute("type");
 				String username_str = (String)session.getAttribute("username");
 				String query = null;
@@ -36,6 +39,10 @@
 						//session.setAttribute("Destination", arrival);
 						String ticketClass = request.getParameter("Class");
 						//session.setAttribute("Class",ticketClass);
+						ResultSet originalSeat = stmt.executeQuery("SELECT seat_number FROM TrainTicketing.Reservation WHERE reservation_number="+rsid+";");
+						originalSeat.next();
+						int originalSeatNum = originalSeat.getInt(1);
+						originalSeat.close();
 						int seatnum = Integer.parseInt(request.getParameter("seat_number"));
 						//session.setAttribute("seat_number", seatnum);
 						String type = request.getParameter("Type");
@@ -73,6 +80,8 @@
 						Date destination_date = Date.valueOf(request.getParameter("Date"));
 						//out.print(reservation.getString(2));
 						//reservation.close();
+						
+						
 						if(ticketClass.equals("Economy")){
 							ResultSet econFare = stmt.executeQuery("SELECT * FROM TrainTicketing.Economy_fare where transit_line_name ='"+reservation.getString(2)+"';");
 							econFare.next();
@@ -123,29 +132,29 @@
 							discountNum = discountRs.getFloat(4);
 						}
 						discountRs.close();
+			
 						
 						total_fare = fare*discountNum*seatnum+booking_fee;
 						String sql;
 						if(assist){
-							sql = "INSERT INTO TrainTicketing.Reservation(total_fare,seat_number, class, booking_fee, reservation_date,dep_Train_ID, dep_Transit_line_name, dep_Station_ID, dep_Date, arr_Train_ID,arr_Transit_line_name, arr_Station_ID, arr_date, assist_representative_SSN, customer_Username, type, discount) values ("+total_fare+","+seatnum+",'"+ticketClass+"',"+booking_fee+","+"?,"+train_id+",'"+train_line_name+"',"+origin_id+","+"?,"+train_id+",'"+train_line_name+"',"+destination_id+","+"?,"+ssn+",'"+username_str+"','"+type+"','"+discount+"'"+");";
+							sql = "UPDATE TrainTicketing.Reservation SET total_fare="+total_fare+",seat_number="+seatnum+",class='"+ticketClass+"',booking_fee="+booking_fee+",reservation_date=?"+",dep_Train_ID="+train_id+",dep_Transit_line_name='"+train_line_name+"',dep_Station_ID="+origin_id+",dep_Date=?"+",arr_Train_ID="+train_id+",arr_Transit_line_name='"+train_line_name+"',arr_Station_ID="+destination_id+",arr_date=?"+",assist_representative_SSN="+ssn+",type='"+type+"',discount='"+discount+"' WHERE reservation_number="+rsid+";";
 						}else{
-							sql = "INSERT INTO TrainTicketing.Reservation(total_fare,seat_number, class, booking_fee, reservation_date,dep_Train_ID, dep_Transit_line_name, dep_Station_ID, dep_Date, arr_Train_ID,arr_Transit_line_name, arr_Station_ID, arr_date,customer_Username, type, discount) values ("+total_fare+","+seatnum+",'"+ticketClass+"',"+booking_fee+","+"?,"+train_id+",'"+train_line_name+"',"+origin_id+","+"?,"+train_id+",'"+train_line_name+"',"+destination_id+","+"?"+",'"+username_str+"','"+type+"','"+discount+"'"+");";
+							sql = "UPDATE TrainTicketing.Reservation SET total_fare="+total_fare+",seat_number="+seatnum+",class='"+ticketClass+"',booking_fee="+booking_fee+",reservation_date=?"+",dep_Train_ID="+train_id+",dep_Transit_line_name='"+train_line_name+"',dep_Station_ID="+origin_id+",dep_Date=?"+",arr_Train_ID="+train_id+",arr_Transit_line_name='"+train_line_name+"',arr_Station_ID="+destination_id+",arr_date=?"+",type='"+type+"',discount='"+discount+"'WHERE reservation_number="+rsid+";";
 						}
 						PreparedStatement pstmt = con.prepareStatement(sql);
 						pstmt.setTimestamp(1,today);
 						pstmt.setDate(2,origin_date);
 						pstmt.setDate(3,destination_date);
 						pstmt.executeUpdate();
-						//String insertQuery="INSERT INTO TrainTicketing.Reservation(total_fare,seat_number, class, booking_fee, reservation_date,dep_Train_ID, dep_Transit_line_name, dep_Station_ID, dep_Date, arr_Transit_line_name, arr_Station_ID, arr_date, assist_representative_SSN, customer_Username) values ("+total_fare+","+seatnum+",'"+ticketClass+"',"+booking_fee+","+today+"',"+train_id+",'"+train_line_name+"',"+origin_id+",'"+origin_date+"',"+train_id+",'"+train_line_name+"',"+destination_id+",'"+destination_date+"',"+ssn+",'"+username_str+"');";
 						
 						String findSeat = "SELECT total_number_of_seats FROM TrainTicketing.Train WHERE train_ID="+train_id+";";
 						ResultSet oldSeat = stmt.executeQuery(findSeat);
 						oldSeat.next();
 						int oldSeatNum = oldSeat.getInt(1);
-						int newSeatNum = oldSeatNum - seatnum;
+						int newSeatNum = oldSeatNum +originalSeatNum - seatnum;
 						oldSeat.close();
 						if(newSeatNum < 0){
-							out.print("I can reserve at most "+oldSeatNum+ " seats.");
+							out.print("You can reserve at most "+oldSeatNum+ " seats.");
 							stmt.close();
 							con.close();
 							return;
@@ -155,27 +164,23 @@
 							int update = stmt.executeUpdate(updateSeat);
 							stmt.close();
 							con.close();
-							response.sendRedirect("SuccessfulReservation.jsp");
+							response.sendRedirect("SuccessfulEditReservation.jsp");
 						}
 						reservation.close();
 						}else{
 							response.sendRedirect("ReservationFail.jsp");
 							return;
 						}
-						
-						
-					/* }else{
-						out.print("login failed");
-					} */
 					
 				}else{
 					out.print("Invalid user type, please log in with proper type.");
 					response.sendRedirect("Login.jsp");
+					
 					return;
 				}
 				
-			
-	%>
-<!-- <a href="Login.jsp">back to login</a> -->
+		%>
+
+
 </body>
 </html>
