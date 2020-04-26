@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Canceled</title>
+<title>Edited</title>
 </head>
 <body>
 <%
-		out.println("You have successfully canceled a reservation!"); 
+		out.println("You have successfully edit a reservation!"); 
 %>
 <br>
 <a href="ViewReservation.jsp">View Reservation</a>
