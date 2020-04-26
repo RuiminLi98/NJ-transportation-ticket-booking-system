@@ -68,6 +68,7 @@
 	<br>
 	<b>date:</b>
 	<b><%= clicked_tuple.getDate() %></b>
+	<br>
 	<b>seats:</b>
 	<b><%= clicked_tuple.getAvailable() + "/" + clicked_tuple.getTrain_max_seats() %></b>
 	<% fare_result.next(); %>
