@@ -16,6 +16,23 @@
 		password:<input type="password" name="password">
 		<br>
 		repeat password:<input type="password" name="repeat">
+		<br>
+		first name:<input type="text" name="first name">
+		<br>
+		last name:<input type="text" name="last name">
+		<br>
+		email:<input type="text" name="email">
+		<br>
+		address:<input type="text" name="address">
+		<br>
+		city:<input type="text" name="city">
+		<br>
+		state:<input type="text" name="state">
+		<br>
+		zip code:<input type="text" name = "zip_code">
+		<br>
+		telephone:<input type="text" name = "telephone">
+		<br>
 		<input type="submit" value="create Account"><a href="Login.jsp">back</a>
 	</form>
 </body>

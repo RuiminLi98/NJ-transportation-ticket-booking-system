@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Tools {
 	public static ResultSet SQL_ASK(String query) throws SQLException {
@@ -308,7 +309,42 @@ public class Tools {
 		return	"selected=\"selected\"";
 	}
 	
+	public static String getFareHtml(ResultSet rs) throws SQLException {
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0; i < 3; i++) {
+			sb.append("<tr>");
+			if(i == 0) {
+				sb.append("<td>Economy</td>");
+			}else if(i == 1) {
+				sb.append("<td>Business</td>");
+			}else if(i == 2){
+				sb.append("<td>First</td>");
+			}
+			for(int j = 1; j <= 4; j++) {
+				sb.append("<td>");
+				sb.append(rs.getInt(i*5 + j + 5) + "$");
+				sb.append("</td>");
+			}
+			sb.append("</tr>");
+		}
+		return sb.toString();
+	}
+	
+	public static boolean isEmailAddress(String candidate) {
+        String regularExp = "^(.+)@(.+)$"; 
+        Pattern pattern = Pattern.compile(regularExp);
+        return candidate != null && pattern.matcher(candidate).matches();
+	}
+	
+	public static boolean isInteger(String candidate) {
+		String regularExp = "\\d*";
+        Pattern pattern = Pattern.compile(regularExp);
+        return candidate != null && pattern.matcher(candidate).matches();
+	}
+	
+	
+	
 	public static String big_query = "select * from (select origin.train_ID, origin.transit_line_name, origin.arrival_time as origin_arrival_time, origin.departure_time as origin_departure_time, destination.arrival_time as destination_arrival_time, destination.departure_time as destination_departure_time,origin.station_ID as origin_ID, destination.station_ID as destination_ID from Stop origin, Stop destination where origin.train_ID = destination.train_ID and origin.transit_line_name = destination.transit_line_name and origin.departure_time < destination.arrival_time) as TA inner join (select t1.transit_line_name, t1.one_way_fee as economy_fare, t2.one_way_fee as bussiness_fare, t3.one_way_fee as first_fare from Economy_fare t1, Business_fare t2, First_fare t3 where t1.transit_line_name = t2.transit_line_name and t2.transit_line_name = t3.transit_line_name) as TB on TA.transit_line_name = TB.transit_line_name inner join (select station_ID, station_name as origin_station_name, city as origin_city, state as origin_state from Station) as S1 on S1.station_ID = TA.origin_ID inner join (select station_ID, station_name as destination_station_name, city as destination_city, state as destination_state from Station) as S2 on S2.station_ID = TA.destination_ID inner join (select train_ID, total_number_of_seats from Train) as TrainTable on TA.train_ID = TrainTable.train_ID where S1.origin_city = ? and S2.destination_city = ?;";
 	public static String stop_info_query = "SELECT s.station_ID as station_ID, s.arrival_time as arrival_time, s.departure_time as departure_time, st.station_name as name FROM Route r, Stop s, Station st WHERE r.transit_line_name = ? AND  r.transit_line_name = s.transit_line_name AND s.station_ID = st.station_ID ORDER BY s.station_ID;";
-
+	public static String fare_query = "select * from Fare, Economy_fare, Business_fare, First_fare where Fare.transit_line_name = ? and Fare.transit_line_name = Economy_fare.transit_line_name and Business_fare.transit_line_name = Fare.transit_line_name and First_fare.transit_line_name = Fare.transit_line_name;";
 }

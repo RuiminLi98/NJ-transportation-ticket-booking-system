@@ -43,10 +43,13 @@
 		
 		//Create a SQL statement
 		PreparedStatement ps = con.prepareStatement(Tools.stop_info_query);
+		PreparedStatement fares =  con.prepareStatement(Tools.fare_query);
 		ps.setString(1, clicked_tuple.getTrainsit_line_name());
+		fares.setString(1, clicked_tuple.getTrainsit_line_name());
 
 		//ask SQL		
 		ResultSet rs = ps.executeQuery();
+		ResultSet fare_result = fares.executeQuery();
 	%>		
 	<b>train ID:</b>	
 	<b><%= "#" + clicked_tuple.getTrain_ID() %></b>
@@ -65,9 +68,26 @@
 	<br>
 	<b>date:</b>
 	<b><%= clicked_tuple.getDate() %></b>
+	<br>
 	<b>seats:</b>
 	<b><%= clicked_tuple.getAvailable() + "/" + clicked_tuple.getTrain_max_seats() %></b>
+	<% fare_result.next(); %>
 	<br>
+	<b>discount rate:</b>
+	<b><%= "senior: "  +  fare_result.getFloat(2) +"/ children: " + fare_result.getFloat(3) + "/ disabled: "  + fare_result.getFloat(4)%></b>
+	<br>
+	<br>
+	<table>
+		<thead>
+			<tr>		
+				<th>class</th>
+				<th>monthly</th>
+				<th>weekly</th>
+				<th>one way</th>
+				<th>round trip</th>		
+		</thead>
+		<%= Tools.getFareHtml(fare_result) %>
+	</table>
 	<br>
 	<table>
 		<thead>
@@ -81,6 +101,7 @@
             <tr><%= Tools.generateRowForStop(rs) %></tr>
         <% } %>
 	</table>
+	<br>
 	<div align="right">
 		<form action="Search.jsp">	
 			<input type="submit" value="back" align="right">
@@ -91,6 +112,7 @@
 	</div>
 	<%
 	//close connection
+		fares.close();
 		rs.close();
 		ps.close();
 		con.close();
