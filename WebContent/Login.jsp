@@ -1,3 +1,4 @@
+<style><%@include file="/WEB-INF/css/style2.css"%></style>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="group14_train.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
@@ -11,17 +12,31 @@
 <body>
 <h1>Log in Train Ticketing system</h1>
 <form method="post" action="LoginProcess.jsp">
-	username:<input type="text" name="username">
+	<b>username:</b>
 	<br>
-	password:<input type="password" name="password">
+	<input type="text" name="username"  min= 1 required>
 	<br>
-	<select name="user_type">
+	<br>
+	<b>password:</b>
+	<br>
+	<input type="password" name="password" min= 1 required>
+	<br>
+	<br>
+	<b>account type:</b>
+	<select name="user_type" style="padding-left">
 		<option>Customer</option>
 		<option>Customer_representative</option>
 		<option>Site_manager</option>
 	</select>
-	<input type="submit" value="submit"><a href="customer_register.jsp">create account</a>
+	<br>
+	<br>
+	<input type="submit" value="submit">
 </form>
+<form method="post" action="customer_register.jsp"><input type="submit" value="creare account"></form>
+
+
+
+
 </body>
 
 </html>

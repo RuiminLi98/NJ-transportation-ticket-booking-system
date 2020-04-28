@@ -1,0 +1,42 @@
+@charset "ISO-8859-1";
+body{
+	text-align:center;
+	margin:0;
+	padding:20px;
+	font-family:Century Gothic;
+	color: #F8B8BA;
+}
+
+ 
+ 
+ select{
+  	border: 1px solid;
+ 	border-color: #F8B8BA;
+		font-family:Century Gothic;
+        line-height: 40px;
+		text-align:center;
+		display: block;
+    	margin: 0 auto;
+    color: #F8B8BA;  
+          	font-weight: bold;
+          
+ }
+ 
+
+input {
+	 border: 1px solid;
+	color: #F8B8BA;  
+	display: inline-block;
+	text-align: center;
+	font-weight: bold;
+	border-color: #F8B8BA;
+}
+
+ option{
+ 	border: 1px solid;
+ 	border-color: #F8B8BA;
+ 	text-align:left;
+ 	font-family:Century Gothic;
+	color: #F8B8BA;
+ }
+ 

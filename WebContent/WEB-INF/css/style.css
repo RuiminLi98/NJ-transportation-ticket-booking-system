@@ -52,7 +52,7 @@ input {
 	display: inline-block;
 	text-align: center;
 	font-weight: bold;
-
+    border: none;
 }
 
  option{

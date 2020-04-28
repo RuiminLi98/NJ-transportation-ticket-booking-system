@@ -1,3 +1,4 @@
+<style><%@include file="/WEB-INF/css/style2.css"%></style>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="group14_train.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
@@ -82,6 +83,7 @@
 			con.close();
 		}
 	%>
+<br>
 <a href="customer_register.jsp">back</a>
 </body>
 </html>

@@ -1,3 +1,4 @@
+<style><%@include file="/WEB-INF/css/style2.css"%></style>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" import="group14_train.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
@@ -11,29 +12,44 @@
 <body>
 	<h1>create an account</h1>
 	<form method="post" action="RegisterProcess.jsp">
-		username:<input type="text" name="username">
+		<b>username:</b><br>
+		<input type="text" name="username" min= 1 required><br>
 		<br>
-		password:<input type="password" name="password">
+		<b>password:</b><br>
+		<input type="password" name="password" min= 1 required><br>
 		<br>
-		repeat password:<input type="password" name="repeat">
+		<b>repeat password:</b><br>
+		<input type="password" name="repeat" min= 1 required><br>
 		<br>
-		first name:<input type="text" name="first name">
+		<b>first name:</b><br>
+		<input type="text" name="first name" min= 1 required><br>
 		<br>
-		last name:<input type="text" name="last name">
+		<b>last name:</b><br>
+		<input type="text" name="last name" min= 1 required><br>
 		<br>
-		email:<input type="text" name="email">
+		<b>email:</b><br>
+		<input type="text" name="email" min= 1 required><br>
 		<br>
-		address:<input type="text" name="address">
+		<b>address:</b><br>
+		<input type="text" name="address" min= 1 required><br>
 		<br>
-		city:<input type="text" name="city">
+		<b>city:</b><br>
+		<input type="text" name="city" min= 1 required><br>
 		<br>
-		state:<input type="text" name="state">
+		<b>state:</b><br>
+		<input type="text" name="state" min= 1 required><br>
 		<br>
-		zip code:<input type="text" name = "zip_code">
+		<b>zip code:</b><br>
+		<input type="text" name = "zip_code" min= 1 required><br>
 		<br>
-		telephone:<input type="text" name = "telephone">
+		<b>telephone:</b><br>
+		<input type="text" name = "telephone" min= 1 required><br>
 		<br>
-		<input type="submit" value="create Account"><a href="Login.jsp">back</a>
+		<br>
+		<input type="submit" value="create Account">
+	</form>
+	<form action="Login.jsp">	
+		<input type="submit" value="back">
 	</form>
 </body>
 </html>
