@@ -30,10 +30,12 @@
 	</select>
 	<br>
 	<br>
-	<input type="submit" value="submit">
+	<input type="submit" value="Log In">
 </form>
-<form method="post" action="customer_register.jsp"><input type="submit" value="creare account"></form>
 
+<form method="post" action="customer_register.jsp"><input type="submit" value="create customer account"></form>
+	<br>
+<form method="post" action="customer_representativeRegister.jsp"><input type="submit" value="create customer representer account"></form>
 
 
 

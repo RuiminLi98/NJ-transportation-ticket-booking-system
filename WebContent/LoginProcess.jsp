@@ -30,7 +30,7 @@
 				query = "select * from Customer where username='"+ username_str + 
 						"' and password='" + password_str + "';";
 			}else{
-				query = "select * from "+ user_type_str +" as x, Employee as e where (e.SSN=x.SSN AND e.username='"+ username_str +"' AND e.password='"+ password_str +"');";
+				query = "select * from "+ user_type_str +" as x, Employee as e where (e.username='"+ username_str +"' AND e.password='"+ password_str +"');";
 			}
 			
 			//ask sql
@@ -46,8 +46,12 @@
 				out.print("login success");
 				session.setAttribute("username", username_str); 
 				session.setAttribute("type", user_type_str); 
+				if(user_type_str.equals("Customer_representative")){
+					response.sendRedirect("Customer_R_Main.jsp");
+				}
+				else{
 				response.sendRedirect("Welcome_"+user_type_str + ".jsp");
-				return;
+				}return;
 			}else{
 				out.print("login failed");
 			}
