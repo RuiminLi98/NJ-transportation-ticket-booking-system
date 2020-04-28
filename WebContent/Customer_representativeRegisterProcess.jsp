@@ -37,10 +37,13 @@
 			Statement stmt2 = con.createStatement();			
 			String query2 = null;
 			query2 = "select * from Employee where SSN='"+ ssn +"'";
-			ResultSet result2 = stmt2.executeQuery(query2);
-			boolean success2 = result2.first();
-			if(success || success2){
-				out.print("username is already existed or SSN is already existed");
+			result = stmt2.executeQuery(query2);
+			boolean success2 = result.first();
+			if(success){
+				out.print("username is already existed");
+			}
+			else if(success){
+				out.print("SSN is already existed");
 			}
 				else{
 				//Make an insert statement for the customer table:
@@ -55,6 +58,12 @@
 				
 				//Run the query against the DB
 				insert.executeUpdate();
+				PreparedStatement insert2 = con.prepareStatement("INSERT INTO Customer_representative(SSN)" +
+						" VALUES (?);");
+				insert2.setString(1, ssn);
+				out.print(insert2.toString());
+				//Run the query against the DB
+				insert2.executeUpdate();
 				//close connection
 				result.close();
 				stmt.close();

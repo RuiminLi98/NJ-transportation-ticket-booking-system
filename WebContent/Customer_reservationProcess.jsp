@@ -21,9 +21,9 @@
 				//Create a SQL statement
 				Statement stmt = con.createStatement();
 				String user_type_str = (String)session.getAttribute("type");
-				String username_str = (String)session.getAttribute("User");
+				String username_str = request.getParameter("User");
 				String query = null;
-				if(user_type_str.equals("Customer")){
+				if(user_type_str.equals("Customer_representative")){
 					/*query = "select * from Customer where username='"+ username_str + 
 							"' and password='" + password_str + "';";
 					ResultSet result = stmt.executeQuery(query);
@@ -50,7 +50,7 @@
 							String[] splited = representative.split(" ");
 							String repFirstName = splited[0];
 							String repLastName = splited[1];
-							ResultSet rep = stmt.executeQuery("SELECT SSN FROM TrainTicketing.Employee where First_name=‘"+repFirstName+"’and last_name=‘"+repLastName+"’;");
+							ResultSet rep = stmt.executeQuery("SELECT SSN FROM TrainTicketing.Employee where First_name='"+repFirstName+"'and last_name='"+repLastName+"';");
 							rep.next();
 							ssn = rep.getInt("SSN");
 							rep.close();
@@ -135,9 +135,7 @@
 						pstmt.setTimestamp(1,today);
 						pstmt.setDate(2,origin_date);
 						pstmt.setDate(3,destination_date);
-						pstmt.executeUpdate();
-						//String insertQuery="INSERT INTO TrainTicketing.Reservation(total_fare,seat_number, class, booking_fee, reservation_date,dep_Train_ID, dep_Transit_line_name, dep_Station_ID, dep_Date, arr_Transit_line_name, arr_Station_ID, arr_date, assist_representative_SSN, customer_Username) values ("+total_fare+","+seatnum+",'"+ticketClass+"',"+booking_fee+","+today+"',"+train_id+",'"+train_line_name+"',"+origin_id+",'"+origin_date+"',"+train_id+",'"+train_line_name+"',"+destination_id+",'"+destination_date+"',"+ssn+",'"+username_str+"');";
-						
+						pstmt.executeUpdate();	 
 						String findSeat = "SELECT total_number_of_seats FROM TrainTicketing.Train WHERE train_ID="+train_id+";";
 						ResultSet oldSeat = stmt.executeQuery(findSeat);
 						oldSeat.next();
@@ -155,11 +153,11 @@
 							int update = stmt.executeUpdate(updateSeat);
 							stmt.close();
 							con.close();
-							response.sendRedirect("SuccessfulReservation.jsp");
+							response.sendRedirect("customer_representative_SuccessfulReservation.jsp");
 						}
 						reservation.close();
 						}else{
-							response.sendRedirect("ReservationFail.jsp");
+							response.sendRedirect("Customer_representative_ReservationFail.jsp");
 							return;
 						}
 						

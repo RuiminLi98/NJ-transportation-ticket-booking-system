@@ -27,7 +27,7 @@
 	%>
 		<form method="post" action="Customer_reservationProcess.jsp">
 		
-		<div><b>Username:</b></div>
+		<div><b>Customer Username:</b></div>
 		<input type="text" name="User"  min= 1 required>
 		<br/>
 		
@@ -58,7 +58,7 @@
 			String target_Customer=request.getParameter("User");
 			String origin_info = request.getParameter("Origin");
 			String destination_info = request.getParameter("Destination");
-			if(target_Customer == null && origin_info == null && destination_info == null) selected = false;
+			if(target_Customer == null || origin_info == null || destination_info == null) selected = false;
 			else{ 
 				PreparedStatement ps = con.prepareStatement(Tools.big_query);
 				ps.setString(1, origin_info.split("-")[0]);
@@ -135,11 +135,11 @@
 		</select>
 		
 		<br>
-		<div><b>Did any representative help you:</b></div>
+		<div><b>For customer representer, please choose your own name:</b></div>
 		<select name="Representative">
 			<option>None</option>
 			<%
-				representative = stmt.executeQuery("select e.First_name,e.last_name from TrainTicketing.Employee e, TrainTicketing.Customer_representative c where e.SSN = c.SSN;");
+			representative = stmt.executeQuery("select e.First_name,e.last_name from TrainTicketing.Employee e, TrainTicketing.Customer_representative c where e.SSN = c.SSN;");
 			%>
 			<% while(representative.next()){ %>
 				<option><%= representative.getString(1) + " " + representative.getString(2) %> </option>
@@ -148,6 +148,7 @@
 		
 		</select>
 		<br>
+		
 	    <input type="submit" value="submit">
 	</form>
 
