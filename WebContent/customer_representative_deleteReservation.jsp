@@ -1,20 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1" import="group14_train.*"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Delete Reservation</title>
+<title>Delete</title>
 </head>
 <body>
-<h1>Delete Reservation</h1>
-<input type="button" onclick="test()" value="Back" />
-<script ...>
-function test(){
- var url = "Customer_R_Main.jsp";
- window.location.href= url;
-}
-</script> 
-
+<%
+ 
+%>
 </body>
 </html>
