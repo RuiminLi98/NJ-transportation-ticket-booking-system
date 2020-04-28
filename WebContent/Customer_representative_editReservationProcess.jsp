@@ -152,7 +152,7 @@ double total_fare = 0.0;
 						}
 						reservation.close();
 						}else{
-							response.sendRedirect("ReservationFail.jsp");
+							response.sendRedirect("Customer_representative_EditFail.jsp");
 							return;
 						}
 				

@@ -71,7 +71,7 @@ int ID;
 					<td><%=arr_time%></td>
 					<td><%=rs.getDate(11)%></td>
 					<td><%=rs.getFloat(10) %></td>
-					<td> <a href="Customer_re_editIndivResv.jsp?reservation=<%=ID%>">View</a></td>
+					<td> <a href="Customer_re_editIndivResv.jsp?reservation=<%=ID%>">Edit</a></td>
 					
  
 					
