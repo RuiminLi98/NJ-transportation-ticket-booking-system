@@ -24,40 +24,26 @@ double total_fare = 0.0;
 				Statement stmt = con.createStatement();
 				int rsid = Integer.parseInt(request.getParameter("reservation_num"));
 				String user_type_str = (String)session.getAttribute("type");
-				String username_str = (String)session.getAttribute("username");
+				String username_str = request.getParameter("customer_name");
 				String query = null;
-				if(user_type_str.equals("Customer")){
-					/*query = "select * from Customer where username='"+ username_str + 
-							"' and password='" + password_str + "';";
-					ResultSet result = stmt.executeQuery(query);
-					boolean success = result.first();
-					result.close(); */
-					/* if(success){ */
 						String depart = request.getParameter("Origin");
-						//session.setAttribute("Origin", depart);
 						String arrival = request.getParameter("Destination");
-						//session.setAttribute("Destination", arrival);
 						String ticketClass = request.getParameter("Class");
-						//session.setAttribute("Class",ticketClass);
 						ResultSet originalSeat = stmt.executeQuery("SELECT seat_number FROM TrainTicketing.Reservation WHERE reservation_number="+rsid+";");
 						originalSeat.next();
 						int originalSeatNum = originalSeat.getInt(1);
 						originalSeat.close();
 						int seatnum = Integer.parseInt(request.getParameter("seat_number"));
-						//session.setAttribute("seat_number", seatnum);
 						String type = request.getParameter("Type");
-						//session.setAttribute("Type",type);
 						String discount = request.getParameter("Discount");
-						//session.setAttribute("Discount",discount);
 						String representative = request.getParameter("Representative");
-						//session.setAttribute("Representative",representative);
 						int ssn =0;
 						boolean assist = false;
 						if(!representative.equals("None")){
 							String[] splited = representative.split(" ");
 							String repFirstName = splited[0];
 							String repLastName = splited[1];
-							ResultSet rep = stmt.executeQuery("SELECT SSN FROM TrainTicketing.Employee where First_name=‘"+repFirstName+"’and last_name=‘"+repLastName+"’;");
+							ResultSet rep = stmt.executeQuery("SELECT SSN FROM TrainTicketing.Employee where First_name='"+repFirstName+"'and last_name='"+repLastName+"';");
 							rep.next();
 							ssn = rep.getInt("SSN");
 							rep.close();
@@ -75,11 +61,9 @@ double total_fare = 0.0;
 						int origin_id = reservation.getInt(7);
 						int destination_id = reservation.getInt(8);
 						Date origin_date = Date.valueOf(request.getParameter("Date"));
-						/* ResultSet dest_rs = stmt.executeQuery("SELECT arrival_time from TrainTicketing.Stop where station_ID ="+destination_id+";");
-						dest_rs.next(); */
+ 
 						Date destination_date = Date.valueOf(request.getParameter("Date"));
-						//out.print(reservation.getString(2));
-						//reservation.close();
+ 
 						
 						
 						if(ticketClass.equals("Economy")){
@@ -164,23 +148,14 @@ double total_fare = 0.0;
 							int update = stmt.executeUpdate(updateSeat);
 							stmt.close();
 							con.close();
-							response.sendRedirect("SuccessfulEditReservation.jsp");
+							response.sendRedirect("Customer_representative_SuccessfulEdit.jsp");
 						}
 						reservation.close();
 						}else{
 							response.sendRedirect("ReservationFail.jsp");
 							return;
 						}
-					
-				}else{
-					out.print("Invalid user type, please log in with proper type.");
-					response.sendRedirect("Login.jsp");
-					
-					return;
-				}
 				
 		%>
-
-
 </body>
 </html>

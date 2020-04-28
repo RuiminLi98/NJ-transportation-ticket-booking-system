@@ -9,10 +9,10 @@
 </head>
 <body>
 <%
-		out.println("Invalid Edit."); 
+		out.println("Invalid Selection of Stops."); 
 %>
  
 <br>
-<a href="Customer_representative_addReservation.jsp">Make a new Reservation</a>
+<a href="Customer_representative_editReservation.jsp">Back</a>
 </body>
 </html>

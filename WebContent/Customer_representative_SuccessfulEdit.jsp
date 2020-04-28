@@ -5,14 +5,14 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Reversed</title>
 </head>
 <body>
 <%
-		out.println("Invalid Edit."); 
+		out.println("You have successfully edit a reservation!"); 
 %>
  
 <br>
-<a href="Customer_representative_addReservation.jsp">Make a new Reservation</a>
+<a href="Customer_representative_editReservation.jsp">Back</a>
 </body>
 </html>
