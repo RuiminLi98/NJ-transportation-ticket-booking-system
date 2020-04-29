@@ -50,7 +50,7 @@
 							String[] splited = representative.split(" ");
 							String repFirstName = splited[0];
 							String repLastName = splited[1];
-							ResultSet rep = stmt.executeQuery("SELECT SSN FROM TrainTicketing.Employee where First_name=‘"+repFirstName+"’and last_name=‘"+repLastName+"’;");
+							ResultSet rep = stmt.executeQuery("SELECT SSN FROM TrainTicketing.Employee where First_name='"+repFirstName+"'and last_name='"+repLastName+"';");
 							rep.next();
 							ssn = rep.getInt("SSN");
 							rep.close();
