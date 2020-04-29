@@ -18,6 +18,8 @@
 	<br>
 	<a href="ViewReservation.jsp">View My Reservation</a>
 	<br>
+	<a href="Question.jsp">Questions?</a>
+	<br>
 	<a href="Logout.jsp">Logout</a>
 </body>
 </html>
