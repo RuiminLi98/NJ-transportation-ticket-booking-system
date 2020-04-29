@@ -35,5 +35,13 @@ Statement stmt = con.createStatement(); %>
 		
  	<input type="submit" value="submit" />
 </form>	
+
+		<input type="button" onclick="test()" value="Back" />
+		<script ...>
+			function test(){
+ 			var url = "Customer_R_Main.jsp";
+ 			window.location.href= url;
+		}
+		</script> 
 </body>
 </html>
