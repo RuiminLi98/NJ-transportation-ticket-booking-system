@@ -20,6 +20,10 @@
 	<br>
 	<input type="submit" value="Post My Question">
 </form>
+<br>
+	<a href="ViewQuestion.jsp">View Your Questions</a>
+	<br>
+
 
 </body>
 </html>
