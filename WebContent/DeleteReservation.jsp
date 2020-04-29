@@ -24,18 +24,20 @@
 	
 	String query = "DELETE FROM TrainTicketing.Reservation WHERE reservation_number="+rsid+";";
 	int delete = stmt.executeUpdate(query);
+	if(delete > 0){
+		response.sendRedirect("SuccessfulCancel.jsp");
+	}
 	
 	
-	
-	ResultSet oldSeat = stmt.executeQuery("SELECT total_number_of_seats FROM TrainTicketing.Train WHERE train_ID="+train_id+";");
+	/* ResultSet oldSeat = stmt.executeQuery("SELECT available_number_of_seats FROM TrainTicketing.Train_schedule WHERE train_ID="+train_id+";");
 	oldSeat.next();
 	int newSeat = seat+oldSeat.getInt(1);
 	oldSeat.close();
-	String update = "UPDATE TrainTicketing.Train SET total_number_of_seats="+newSeat+" WHERE train_ID="+train_id+";";
+	String update = "UPDATE TrainTicketing.Train_schedule SET available_number_of_seats="+newSeat+" WHERE train_ID="+train_id+";";
 	int updateSeat = stmt.executeUpdate(update);
 	if(updateSeat > 0){
-		response.sendRedirect("SuccessfulReservation.jsp");
-	}
+		response.sendRedirect("SuccessfulCancel.jsp");
+	} */
 	
 %>
 </body>

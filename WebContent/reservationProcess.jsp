@@ -124,6 +124,31 @@
 						}
 						discountRs.close();
 						
+						String findAvailable = "SELECT available_number_of_seats FROM TrainTicketing.Train_schedule WHERE train_ID="+train_id+" and transit_line_name='"+train_line_name+"';";
+						ResultSet findAva = stmt.executeQuery(findAvailable);
+						int available = 0;
+						if(findAva.next()){
+							available = findAva.getInt(1);
+						}
+						findAva.close();
+						
+						String reserved = "SELECT sum(seat_number) FROM TrainTicketing.Reservation WHERE dep_Train_ID="+train_id+" and dep_date=?";
+						PreparedStatement pstmt2 = con.prepareStatement(reserved);
+						pstmt2.setDate(1,origin_date);
+						ResultSet reservedRS = pstmt2.executeQuery();
+						int reservedSeat = 0;
+						if(reservedRS.next()){
+							reservedSeat = reservedRS.getInt(1);
+						}
+						reservedRS.close();
+						
+						if(seatnum+ reservedSeat > available){
+							out.print("You can reserve at most "+(available - reservedSeat)+ " seats.");
+							stmt.close();
+							con.close();
+							return;
+						}
+						
 						total_fare = fare*discountNum*seatnum+booking_fee;
 						String sql;
 						if(assist){
@@ -138,7 +163,11 @@
 						pstmt.executeUpdate();
 						//String insertQuery="INSERT INTO TrainTicketing.Reservation(total_fare,seat_number, class, booking_fee, reservation_date,dep_Train_ID, dep_Transit_line_name, dep_Station_ID, dep_Date, arr_Transit_line_name, arr_Station_ID, arr_date, assist_representative_SSN, customer_Username) values ("+total_fare+","+seatnum+",'"+ticketClass+"',"+booking_fee+","+today+"',"+train_id+",'"+train_line_name+"',"+origin_id+",'"+origin_date+"',"+train_id+",'"+train_line_name+"',"+destination_id+",'"+destination_date+"',"+ssn+",'"+username_str+"');";
 						
-						String findSeat = "SELECT total_number_of_seats FROM TrainTicketing.Train WHERE train_ID="+train_id+";";
+						
+						response.sendRedirect("SuccessfulReservation.jsp");
+						
+						
+						/* String findSeat = "SELECT available_number_of_seats FROM TrainTicketing.Train_schedule WHERE train_ID="+train_id+";";
 						ResultSet oldSeat = stmt.executeQuery(findSeat);
 						oldSeat.next();
 						int oldSeatNum = oldSeat.getInt(1);
@@ -150,13 +179,13 @@
 							con.close();
 							return;
 						}else{
-							String updateSeat = "UPDATE TrainTicketing.Train SET total_number_of_seats="+newSeatNum+" WHERE train_ID ="+train_id+";";
+							String updateSeat = "UPDATE TrainTicketing.Train_schedule SET available_number_of_seats="+newSeatNum+" WHERE train_ID ="+train_id+";";
 							//int insert = stmt.executeUpdate(insertQuery);
 							int update = stmt.executeUpdate(updateSeat);
 							stmt.close();
 							con.close();
 							response.sendRedirect("SuccessfulReservation.jsp");
-						}
+						} */
 						reservation.close();
 						}else{
 							response.sendRedirect("ReservationFail.jsp");
