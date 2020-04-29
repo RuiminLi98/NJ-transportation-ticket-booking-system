@@ -22,7 +22,10 @@
 		newquestion.setString(1, Customer);
 		newquestion.setString(2, Question);
 		newquestion.executeUpdate();
+		con.close();
+		newquestion.close();
 	%>
+	<h1>Thank you for your Question! We'll get to you back as soon as possible</h1>
 
 </body>
 </html>
