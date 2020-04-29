@@ -9,6 +9,16 @@
 <body>
 <h1>delete information of train schedule</h1>
 
+
+	<b>Train_ID:</b>
+	<br>
+	<input type="text" name="Train_ID"  min= 1 required>
+	<br>
+	<br>
+	<b>transit_line_name:</b>
+	<br>
+	<input type="password" name="transit_line_name" min= 1 required>
+	<br>
 <input type="button" onclick="test()" value="Back" />
 <script ...>
 function test(){
