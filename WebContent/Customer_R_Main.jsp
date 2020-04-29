@@ -68,10 +68,18 @@ function test6(){
 </script> 
 <br/>
 
-
-<input type="button" onclick="test7()" value="Exit" />
+<input type="button" onclick="test7()" value="Answer customer question" />
 <script ...>
 function test7(){
+ var url = "Customer_representative_answerQ.jsp";
+ window.location.href= url;
+}
+</script> 
+<br/>
+
+<input type="button" onclick="test87()" value="Exit" />
+<script ...>
+function test87(){
  var url = "Login.jsp";
  window.location.href= url;
 }
