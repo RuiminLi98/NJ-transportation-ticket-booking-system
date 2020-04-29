@@ -34,7 +34,7 @@
 	String update = "UPDATE TrainTicketing.Train SET total_number_of_seats="+newSeat+" WHERE train_ID="+train_id+";";
 	int updateSeat = stmt.executeUpdate(update);
 	if(updateSeat > 0){
-		response.sendRedirect("Customer_R_Main.jsp");
+		response.sendRedirect("customer_representative_deleteReservation.jsp");
 	}
 	
 %>
