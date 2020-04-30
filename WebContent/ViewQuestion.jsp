@@ -65,6 +65,14 @@ int Qid;
 	
 		%>
 		
+		<br>
+		<br>
+		<a href="Question.jsp">Ask More Questions!</a>
+		
+		<br>
+		<br>
+		<a href="Logout.jsp">Logout</a>
+		
 </form>
 </body>
 </html>
