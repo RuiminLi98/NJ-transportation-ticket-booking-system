@@ -65,8 +65,8 @@
 				insert.setString(6, address);
 				insert.setString(7, city);
 				insert.setString(8, state);
-				insert.setInt(9, Integer.parseInt(zip_code));
-				insert.setInt(10, Integer.parseInt(telephone));
+				insert.setString(9, zip_code);
+				insert.setString(10,telephone);
 				out.print(insert.toString());
 				
 				//Run the query against the DB
