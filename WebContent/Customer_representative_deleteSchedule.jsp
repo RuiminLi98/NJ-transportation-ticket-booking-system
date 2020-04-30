@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>delete information of train schedule</h1>
-
+	<form method="post" action="Customer_representative_deleteScheduleController.jsp">
 
 	<b>Train_ID:</b>
 	<br>
@@ -17,8 +17,13 @@
 	<br>
 	<b>transit_line_name:</b>
 	<br>
-	<input type="password" name="transit_line_name" min= 1 required>
+	<input type="text" name="transit_line_name" min= 1 required>
 	<br>
+			<br>
+		
+	    <input type="submit" value="submit">
+	</form>
+	
 <input type="button" onclick="test()" value="Back" />
 <script ...>
 function test(){
