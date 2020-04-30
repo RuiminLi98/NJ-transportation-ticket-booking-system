@@ -47,12 +47,12 @@ select{
  }
  
 input {
-    border: none;
+    border: 1px solid;
 	color: #F8B8BA;  
 	display: inline-block;
 	text-align: center;
 	font-weight: bold;
-    border: none;
+    border-color: #F8B8BA;
 }
 
  option{

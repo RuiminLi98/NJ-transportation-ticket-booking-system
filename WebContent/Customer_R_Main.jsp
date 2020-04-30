@@ -97,6 +97,26 @@ function test9(){
 <br/>
 
 
+<input type="button" onclick="test10()" value="Produces a list of customers who reserved on a given transit line" />
+<script ...>
+function test10(){
+ var url = "Customer_R_customersForTransitLine.jsp";
+ window.location.href= url;
+}
+</script> 
+<br/>
+
+
+<input type="button" onclick="test11()" value="Produces a list of customers who reserved on a train" />
+<script ...>
+function test11(){
+ var url = "Customer_R_customersForTrain.jsp";
+ window.location.href= url;
+}
+</script> 
+<br/>
+
+
 
 <input type="button" onclick="test87()" value="Exit" />
 <script ...>

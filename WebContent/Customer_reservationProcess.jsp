@@ -135,7 +135,9 @@
 						pstmt.setTimestamp(1,today);
 						pstmt.setDate(2,origin_date);
 						pstmt.setDate(3,destination_date);
-						pstmt.executeUpdate();	 
+						try{
+						pstmt.executeUpdate();}
+						catch(Exception exp){out.println("The input information is not correct");return;}
 						String findSeat = "SELECT total_number_of_seats FROM TrainTicketing.Train WHERE train_ID="+train_id+";";
 						ResultSet oldSeat = stmt.executeQuery(findSeat);
 						oldSeat.next();
@@ -150,7 +152,11 @@
 						}else{
 							String updateSeat = "UPDATE TrainTicketing.Train SET total_number_of_seats="+newSeatNum+" WHERE train_ID ="+train_id+";";
 							//int insert = stmt.executeUpdate(insertQuery);
+							try{
 							int update = stmt.executeUpdate(updateSeat);
+							}catch(Exception e){
+								out.println("The input information is incorrect");return;
+							}
 							stmt.close();
 							con.close();
 							response.sendRedirect("customer_representative_SuccessfulReservation.jsp");
