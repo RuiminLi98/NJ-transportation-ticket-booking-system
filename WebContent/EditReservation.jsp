@@ -28,6 +28,7 @@
 	ResultSet representative = null;
 	ResultSet available = null;
 	boolean selected = true;
+	ResultSet route = null;
 	/*  ResultSet dep_date = null;*/
 %>
 <!DOCTYPE html>
@@ -142,7 +143,20 @@
 		
 		
 		</select>
-			
+		
+		<br>
+		<div><b>Transit Line</b></div>
+		<select name="Transit_line">
+		<%
+			route = stmt.executeQuery("select transit_line_name from TrainTicketing.Train_schedule");
+			while(route.next()){%>
+				<% if(route.getString(1).equals(line_name)){%>
+					<option selected><%=route.getString(1)%></option>
+				<% }else{%>
+					<option><%=route.getString(1)%></option>
+				<%} %>
+		<%} %>
+		</select>
 		<br>
 		<div><b>Class:</b></div>
 		<select name="Class">
