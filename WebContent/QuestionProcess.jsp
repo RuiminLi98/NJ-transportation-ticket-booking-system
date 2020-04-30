@@ -26,6 +26,15 @@
 		newquestion.close();
 	%>
 	<h1>Thank you for your Question! We'll get to you back as soon as possible</h1>
+<br>
+<a href="ViewQuestion.jsp">View Your Questions</a>
 
+<br>
+
+<a href="Question.jsp">Ask More Questions!</a>
+
+<br>
+
+<a href="Logout.jsp">Logout</a>
 </body>
 </html>

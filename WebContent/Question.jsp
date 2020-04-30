@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Log in</title>
+<title>Questions</title>
 </head>
 <body>
 <h1>Post and View Your Questions</h1>
@@ -23,7 +23,8 @@
 <br>
 	<a href="ViewQuestion.jsp">View Your Questions</a>
 	<br>
-
+	<br>
+<a href="Logout.jsp">Logout</a>
 
 </body>
 </html>
