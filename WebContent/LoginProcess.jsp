@@ -49,6 +49,9 @@
 				if(user_type_str.equals("Customer_representative")){
 					response.sendRedirect("Customer_R_Main.jsp");
 				}
+				else if(user_type_str.equals("Site_manager")){
+					response.sendRedirect("Admin_AdminHome.jsp");
+				}
 				else{
 				response.sendRedirect("Welcome_"+user_type_str + ".jsp");
 				}return;
