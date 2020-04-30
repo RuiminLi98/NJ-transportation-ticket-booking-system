@@ -87,6 +87,17 @@ function test8(){
 <br/>
 
 
+<input type="button" onclick="test9()" value="Produces a list of train schedules for a specific station as origin/destination" />
+<script ...>
+function test9(){
+ var url = "Customer_R_schedulesStation.jsp";
+ window.location.href= url;
+}
+</script> 
+<br/>
+
+
+
 <input type="button" onclick="test87()" value="Exit" />
 <script ...>
 function test87(){

@@ -81,6 +81,7 @@
  					<td><% out.print(l6); %></td>
  					<td><% out.print(l7); %></td> 					 
  </tr>
+ 
  </table>
  <% } %>
  <% } %>
