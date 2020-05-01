@@ -133,8 +133,9 @@
 	</table>
 <%  if(tuples.size() == 0){ %>
 	<br><br>
-	<h2 style="text-align:center">NO MATCHED RESULT</h2>
-	<h2 style="text-align:center">FOR CHOSEN ORIGIN, DESTINATION AND DATE</h2>
+	<h2 style="text-align:center">NO TRAIN FROM CHOSEN ORIGIN TO CHOSEN DESTINATION</h2>
+	<h2 style="text-align:center">IN CHOSEN DATE CAN BE RESERVED NOW</h2>
+	<p style="text-align:center">NOTICE: TRAINS THAT ALREADY LEAVE THE ORIGIN STATION WON'T APPEAR ON RESULT</p>
 <% } %>
 <%
 	//close connection
