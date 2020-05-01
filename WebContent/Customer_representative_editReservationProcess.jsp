@@ -45,6 +45,10 @@
 						//session.setAttribute("Discount",discount);
 						String representative = request.getParameter("Representative");
 						//session.setAttribute("Representative",representative);
+						if(depart.equals(arrival)){
+							out.println("Origin and Destination cannot be the same.");
+							return;
+						}
 						int ssn =-1;
 						boolean assist = false;
 						if(!representative.equals("None")){
