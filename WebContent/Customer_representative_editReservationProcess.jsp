@@ -14,6 +14,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h1>All the available schedule for this reservation:</h1>
 	<% 
 				ApplicationDB db = new ApplicationDB();	
 				Connection con = db.getConnection();

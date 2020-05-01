@@ -31,7 +31,6 @@ int ID;
 				<td><b>Arrival Time</b></td>
 				<td><b>Reservation Date</b></td>
 				<td><b>Total Fare</b></td>
-				<td><b>View</b></td>
 				<td><b>Cancel</b></td>
 			</tr>
 			

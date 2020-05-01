@@ -82,10 +82,10 @@
  					<td><% out.print(l7); %></td> 					 
  </tr>
  
- </table>
- <% } %>
- <% } %>
 
+ <% } %>
+ <% } %>
+ </table>
 <input type="button" onclick="test87()" value="Exit" />
 <script ...>
 function test87(){
