@@ -46,10 +46,10 @@
 		<b>new number_of_stops:</b><br>
 		<input type="text" name="number_of_stops" min= 1 required><br>
 		<br>
-		<b>new departure_time:</b><br>
+		<b>new departure_time:(format xx:xx:xx)</b><br>
 		<input type="text" name="departure_time" min= 1 required><br>
 		<br>
-		<b>new arrival_time:</b><br>
+		<b>new arrival_time:(format xx:xx:xx)</b><br>
 		<input type="text" name="arrival_time" min= 1 required><br>
 		<br>
 		<b>new travel_time:</b><br>

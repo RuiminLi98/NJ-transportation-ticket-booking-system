@@ -40,10 +40,10 @@
 		<b>number_of_stops:</b><br>
 		<input type="text" name="number_of_stops" min= 1 required><br>
 		<br>
-		<b>departure_time:</b><br>
+		<b>departure_time:(format xx:xx:xx)</b><br>
 		<input type="text" name="departure_time" min= 1 required><br>
 		<br>
-		<b>arrival_time:</b><br>
+		<b>arrival_time:(format xx:xx:xx)</b><br>
 		<input type="text" name="arrival_time" min= 1 required><br>
 		<br>
 		<b>travel_time:</b><br>

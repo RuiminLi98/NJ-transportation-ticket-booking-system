@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 <%
 	ApplicationDB db = new ApplicationDB();	
 	Connection con = db.getConnection();

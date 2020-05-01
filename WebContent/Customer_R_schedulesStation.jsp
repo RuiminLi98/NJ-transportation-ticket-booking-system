@@ -33,10 +33,11 @@
         </select>
 <br>
 <br>
-	<b>as origin or destination:</b>
+	<b>as:</b>
         <select name="station_type">
 		<option> origin</option>
 		<option> destination</option>
+		<option> destinationOrOrigin</option>
         </select>
         
 <%
@@ -82,6 +83,34 @@
 	String destination_str=request.getParameter("station");
 	PreparedStatement element = con.prepareStatement("select t.* from TrainTicketing.Train_schedule t, TrainTicketing.Route r, TrainTicketing.Station s WHERE t.transit_line_name LIKE r.transit_line_name AND r.destination_station_ID = s.station_ID AND s.city LIKE ?;");
 	element.setString(1, destination_str.split("-")[0]);
+	ResultSet result = element.executeQuery(); 
+	while(result.next()){
+		int l1=result.getInt(1);
+		String l2=result.getString(2);
+		int l3=result.getInt(3);
+		int l4=result.getInt(4);
+		Time l5=result.getTime(5);
+		Time l6=result.getTime(6);
+		String l7=result.getString(7);
+%>
+
+<tr>				<td><% out.print(l1); %></td>
+					<td><% out.print(l2); %></td>
+					<td><% out.print(l3); %></td>
+					<td><% out.print(l4); %></td>
+					<td><% out.print(l5); %></td>
+					<td><% out.print(l6); %></td>
+					<td><% out.print(l7); %></td> 					 
+</tr>
+<% } %> 
+<% }
+if(station_temp != null && station_temp.equals("destinationOrOrigin")){
+ 
+	String destination_str=request.getParameter("station");
+	String origin_str=request.getParameter("station");
+	PreparedStatement element = con.prepareStatement("select t.* from TrainTicketing.Train_schedule t, TrainTicketing.Route r, TrainTicketing.Station s WHERE t.transit_line_name LIKE r.transit_line_name AND r.destination_station_ID = s.station_ID AND s.city LIKE ? UNION select t.* from TrainTicketing.Train_schedule t, TrainTicketing.Route r, TrainTicketing.Station s WHERE t.transit_line_name LIKE r.transit_line_name AND r.origin_station_ID = s.station_ID AND s.city LIKE ?;");
+	element.setString(1, destination_str.split("-")[0]);
+	element.setString(2, origin_str.split("-")[0]);
 	ResultSet result = element.executeQuery(); 
 	while(result.next()){
 		int l1=result.getInt(1);
