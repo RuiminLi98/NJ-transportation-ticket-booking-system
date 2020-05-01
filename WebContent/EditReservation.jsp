@@ -69,10 +69,10 @@
 			discount = rs.getString(18);
 			rs.close();
 			
-			String rep_query = "SELECT e.First_name, e.last_name FROM TrainTicketing.Employee as e, TrainTicketing.Customer_representative as c, TrainTicketing.Reservation as r where r.reservation_number="+rsid+" and c.SSN="+rep_ssn+" and e.SSN=c.SSN;";
+			String rep_query = "SELECT e.First_name, e.last_name ,e.username FROM TrainTicketing.Employee as e, TrainTicketing.Customer_representative as c, TrainTicketing.Reservation as r where r.reservation_number="+rsid+" and c.SSN="+rep_ssn+" and e.SSN=c.SSN;";
 			ResultSet rep_str = stmt.executeQuery(rep_query);
 			if(rep_str.next()){
-				rep = rep_str.getString(1)+" "+ rep_str.getString(2);
+				rep = rep_str.getString(1)+" "+ rep_str.getString(2) + " (username: "+ rep_str.getString(3)+")";
 				rep_str.close();
 			}else{
 				rep="None";
@@ -236,13 +236,13 @@
 		<select name="Representative">
 			<option>None</option>
 			<%
-				representative = stmt.executeQuery("select e.First_name,e.last_name from TrainTicketing.Employee e, TrainTicketing.Customer_representative c where e.SSN = c.SSN;");
+			representative = stmt.executeQuery("select e.First_name,e.last_name, e.username from TrainTicketing.Employee e, TrainTicketing.Customer_representative c where e.SSN = c.SSN;");
 				
 			 while(representative.next()){ 
-				if(rep.equals(representative.getString(1) + " " + representative.getString(2))){%>
-					<option selected><%= representative.getString(1) + " " + representative.getString(2) %> </option>
+				if(rep.equals(representative.getString(1) + " " + representative.getString(2)+ " (username: "+ representative.getString(3)+")")){%>
+					<option selected><%= representative.getString(1) + " " + representative.getString(2)+ " (username: "+ representative.getString(3)+")" %> </option>
 				<%} else{%>
-					<option><%= representative.getString(1) + " " + representative.getString(2) %> </option>
+					<option><%= representative.getString(1) + " " + representative.getString(2)+ " (username: "+ representative.getString(3)+")" %> </option>
 				<%} %>
 			<%}%>
 			<%representative.close();%>

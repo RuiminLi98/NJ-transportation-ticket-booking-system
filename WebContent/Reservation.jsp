@@ -189,10 +189,10 @@
 		<select name="Representative">
 			<option>None</option>
 			<%
-				representative = stmt.executeQuery("select e.First_name,e.last_name from TrainTicketing.Employee e, TrainTicketing.Customer_representative c where e.SSN = c.SSN;");
+				representative = stmt.executeQuery("select e.First_name,e.last_name, e.username from TrainTicketing.Employee e, TrainTicketing.Customer_representative c where e.SSN = c.SSN;");
 			%>
 			<% while(representative.next()){ %>
-				<option><%= representative.getString(1) + " " + representative.getString(2) %> </option>
+				<option><%= representative.getString(1) + " " + representative.getString(2) + " (username: "+ representative.getString(3)+")"%> </option>
 			<%}%>
 			<%representative.close();%>
 		
