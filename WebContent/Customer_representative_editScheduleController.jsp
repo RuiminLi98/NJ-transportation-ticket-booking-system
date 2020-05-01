@@ -74,7 +74,7 @@ ResultSet usernames=null;
 			usernames=Customers.executeQuery();
 			
 			while(usernames.next()){
-				PreparedStatement Alert=con.prepareStatement("INSERT INTO `TrainTicketing`.`Questions` (`Customer`, `Question`, `Response`) VALUES (?, 'Alert', 'Your Train Schedule has some changes'); ");
+				PreparedStatement Alert=con.prepareStatement("INSERT INTO `TrainTicketing`.`Questions` (`Customer`, `Question`, `Response`) VALUES (?, 'Alert', 'Your Train Schedule "+transit_line_name_str+ " has some changes!'); ");
 				Alert.setString(1, usernames.getString(1));
 				Alert.executeUpdate();
 				Alert.close();
