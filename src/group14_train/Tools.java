@@ -230,7 +230,11 @@ public class Tools {
 				break;
 			case "destination_departure_time":
 				Collections.sort(list,new Comparator<QueryResultTuple>() {
-					public int compare(QueryResultTuple arg0, QueryResultTuple arg1) {return arg0.getDestination_departure_time().compareTo(arg1.getDestination_departure_time());}});
+					public int compare(QueryResultTuple arg0, QueryResultTuple arg1) {
+							String s1 = arg0.getDestination_departure_time() == null? "null" : arg0.getDestination_departure_time().toString();
+							String s2 = arg1.getDestination_departure_time() == null? "null" : arg1.getDestination_departure_time().toString();
+							return s1.compareTo(s2);
+						}});
 				break;
 			case "economy_fare":
 				Collections.sort(list,new Comparator<QueryResultTuple>() {
