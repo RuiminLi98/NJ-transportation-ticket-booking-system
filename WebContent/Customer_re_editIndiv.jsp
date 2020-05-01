@@ -37,7 +37,7 @@ int ID;
 			
 			<%
 			String customerName=request.getParameter("customer_name");
-					out.println("welcome: " + customerName);
+					out.println("The list of reservation of: " + customerName);
 			if(customerName == null){
 				out.print("Please log in first.");
 				response.sendRedirect("Login.jsp");

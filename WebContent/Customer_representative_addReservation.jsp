@@ -135,18 +135,19 @@
 		</select>
 		
 		<br>
-		<div><b>For customer representer, please choose your own name:</b></div>
-		<select name="Representative">
-			<option>None</option>
-			<%
-			representative = stmt.executeQuery("select e.First_name,e.last_name from TrainTicketing.Employee e, TrainTicketing.Customer_representative c where e.SSN = c.SSN;");
-			%>
-			<% while(representative.next()){ %>
-				<option><%= representative.getString(1) + " " + representative.getString(2) %> </option>
-			<%}%>
-			<%representative.close();%>
+		<div><b>For customer representer, your name is:</b></div>
+<!-- 		<select name="Representative"> -->
+<!-- 			<option>None</option> -->
+<%-- 			<% --%>
+<!-- 		representative = stmt.executeQuery("select e.First_name,e.last_name from TrainTicketing.Employee e, TrainTicketing.Customer_representative c where e.SSN = c.SSN;");
+<%-- 			%> --%>
+<%-- 			<% while(representative.next()){ %> --%>
+<%-- 				<option><%= representative.getString(1) + " " + representative.getString(2) %> </option> --%>
+<%-- 			<%}%> --%>
+<%-- 			<%representative.close();%> --%>
 		
-		</select>
+<!-- 		</select> -->
+			<% out.println("<div>" + (String)session.getAttribute("username") + "</div>");%>
 		<br>
 		
 	    <input type="submit" value="submit">
