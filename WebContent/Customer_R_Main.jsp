@@ -116,7 +116,14 @@ function test11(){
 </script> 
 <br/>
 
-
+<input type="button" onclick="test12()" value="Produces a list of customers who reserved on a train and a given transit line" />
+<script ...>
+function test12(){
+ var url = "Customer_R_customersForTrainAndLine.jsp";
+ window.location.href= url;
+}
+</script> 
+<br/>
 
 <input type="button" onclick="test87()" value="Exit" />
 <script ...>
