@@ -4,6 +4,10 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="java.util.regex.*" %>
+<% 
+ResultSet usernames=null;
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,15 +58,34 @@
 			insert.setInt(8, Integer.parseInt(trainID_str));
 			insert.setString(9, transit_line_name_str);
 			
+			
 			try{
 				insert.executeUpdate();
 			} catch (Exception e){
 				response.sendRedirect("Customer_representative_editScheduleFail.jsp");
 			}
 			out.println("Edit schedule successful");
+			
+			
+			//Alert for customers that booked this line
+			PreparedStatement Customers=con.prepareStatement("select distinct customer_Username from Reservation r where r.dep_Train_ID=? and r.dep_Transit_line_name=?;");
+			Customers.setInt(1, Integer.parseInt(trainID_str));
+			Customers.setString(2, transit_line_name_str);
+			usernames=Customers.executeQuery();
+			
+			while(usernames.next()){
+				PreparedStatement Alert=con.prepareStatement("INSERT INTO `TrainTicketing`.`Questions` (`Customer`, `Question`, `Response`) VALUES (?, 'Alert', 'Your Train Schedule has some changes'); ");
+				Alert.setString(1, usernames.getString(1));
+				Alert.executeUpdate();
+				Alert.close();
+				
+			}
+			
 			//close connection
+			Customers.close();
 			stmt.close();
 			con.close();
+			usernames.close();
 		}
 	%>
 <br>
