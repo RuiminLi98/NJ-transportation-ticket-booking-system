@@ -27,6 +27,9 @@
 	<a href="SearchQuestion.jsp">Search for Questions</a>
 	<br>
 	<br>
+	<a href="Welcome_Customer.jsp">Back to Welcome Page</a>
+	<br>
+	<br>
 <a href="Logout.jsp">Logout</a>
 
 </body>
