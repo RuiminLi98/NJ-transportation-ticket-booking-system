@@ -37,10 +37,11 @@
 <title>Edit Reservation</title>
 </head>
 <body>
-<form method="post" action="Customer_representative_editReservationProcess.jsp?reservation_num=<%=Integer.parseInt(request.getParameter("reservation"))%>">
+<form method="post" action="Customer_representative_editReservationProcess.jsp">
 	<h1>Reservation Details</h1>
 	<%
 		int rsid = Integer.parseInt(request.getParameter("reservation"));
+		session.setAttribute("Customer_edit_reservation",Integer.toString(rsid));
 		ApplicationDB db = new ApplicationDB();	
 		Connection con = db.getConnection();
 	
@@ -64,6 +65,8 @@
 			dest_station = rs.getInt(12);
 			arr_date = rs.getTimestamp(13);
 			rep_ssn = rs.getInt(14);
+			String username_str = rs.getString(15);
+			session.setAttribute("Customer_edit_username",username_str);
 			type = rs.getString(17);
 			discount = rs.getString(18);
 			rs.close();
@@ -235,7 +238,6 @@
 		
 		</select>
 		<br>
-		<% session.setAttribute("reservation_id",rsid); %>
 		<input type="submit" value="Save Edit">
 	
 </form>	
