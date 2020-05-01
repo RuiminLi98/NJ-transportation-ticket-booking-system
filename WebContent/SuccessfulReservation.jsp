@@ -15,5 +15,13 @@
 <a href="ViewReservation.jsp">View Reservation</a>
 <br>
 <a href="Reservation.jsp">Make a new Reservation</a>
+<br>
+<%
+	if(session.getAttribute("username") ==null){
+%>
+<a href="Login.jsp">Back to Log in Page</a>
+<%}else{%>
+<a href="Welcome_Customer.jsp">Back to Welcome Page</a>
+<%} %>
 </body>
 </html>

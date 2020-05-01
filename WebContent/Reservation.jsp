@@ -32,6 +32,14 @@
 			allCitySet = stmt.executeQuery("SELECT city,state FROM TrainTicketing.Station;");
 			
 	%>
+	<br>
+<%
+	if(session.getAttribute("username") ==null){
+%>
+<a href="Login.jsp">Back to Log in Page</a>
+<%}else{%>
+<a href="Welcome_Customer.jsp">Back to Welcome Page</a>
+<%} %>
 	<!-- <script type="text/javascript">
 		function setOrigion(){
 			//var value = selectObject.value;
@@ -200,6 +208,7 @@
 		<br>
 	    <input type="submit" value="submit">
 	</form>
+	
 	
 	
 	

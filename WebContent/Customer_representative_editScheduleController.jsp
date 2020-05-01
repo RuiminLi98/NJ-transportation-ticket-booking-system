@@ -4,6 +4,7 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="java.util.regex.*" %>
+<%@ page import="java.util.Date.*,java.text.*" %>
 <% 
 ResultSet usernames=null;
 
@@ -73,9 +74,12 @@ ResultSet usernames=null;
 			Customers.setString(2, transit_line_name_str);
 			usernames=Customers.executeQuery();
 			
+			
 			while(usernames.next()){
-				PreparedStatement Alert=con.prepareStatement("INSERT INTO `TrainTicketing`.`Questions` (`Customer`, `Question`, `Response`) VALUES (?, 'Alert', 'Your Train Schedule "+transit_line_name_str+ " has some changes!'); ");
+				PreparedStatement Alert=con.prepareStatement("INSERT INTO `TrainTicketing`.`Questions` (`Customer`, `Question`, `Response`) VALUES (?, 'Alert', 'Your Train Schedule "+transit_line_name_str+" has some changes!'); ");
 				Alert.setString(1, usernames.getString(1));
+				
+				
 				Alert.executeUpdate();
 				Alert.close();
 				

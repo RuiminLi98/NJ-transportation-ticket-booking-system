@@ -48,11 +48,14 @@
 						int ssn =0;
 						boolean assist = false;
 						if(!representative.equals("None")){
+							
+
+							int idx = Tools.findUsername(representative);
 							String[] splited = representative.split(" ");
 							String repFirstName = splited[0];
 							String repLastName = splited[1];
 							String temp = splited[3];
-							String cpusername = temp.substring(0,temp.length()-1);
+							String cpusername = representative.substring(idx,representative.length()-1);
 							String cpusernameSQL = "SELECT SSN FROM TrainTicketing.Employee where First_name='"+repFirstName+"'and last_name='"+repLastName+"' and username='"+cpusername+"';";
 							ResultSet rep = stmt.executeQuery(cpusernameSQL);
 							rep.next();
@@ -81,6 +84,11 @@
 							arr_station_id = destRS.getInt(1);
 						}
 						destRS.close();
+						
+						if(dep_station_id == arr_station_id){
+							response.sendRedirect("ReservationFail.jsp");
+							return;
+						}
 						
 						ResultSet checkTransitLine = stmt.executeQuery("select transit_line_name, train_ID from TrainTicketing.Stop where station_ID="+dep_station_id+" and transit_line_name = '"+transit_line+"' and transit_line_name in (select transit_line_name from TrainTicketing.Stop where station_ID="+arr_station_id+" and transit_line_name ='"+ transit_line+"')");
 						if(!checkTransitLine.next()){
