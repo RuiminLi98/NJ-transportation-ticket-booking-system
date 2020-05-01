@@ -122,6 +122,7 @@ public class Tools {
 				processed.add(info_tuple.clone());
 			}
 		}
+		if(processed.size() != 0 && processed.get(0).getOrigin_station_name().equals(processed.get(0).getDestination_station_name()))	return new ArrayList<QueryResultTuple>();
 		return processed;
 	}
 	
