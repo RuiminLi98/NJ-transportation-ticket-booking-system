@@ -5,12 +5,14 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Reservation Failed</title>
 </head>
 <body>
 <%
-		out.println("Invalid Selection of Stops."); 
+		out.println("Invalid selection of stops or transit line, please search and reserve again with correct information."); 
 %>
+<br>
+<a href="Search.jsp">Search</a>
 <br>
 <a href="ViewReservation.jsp">View Reservation</a>
 <br>

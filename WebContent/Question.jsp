@@ -24,6 +24,9 @@
 	<a href="ViewQuestion.jsp">View Your Questions</a>
 	<br>
 	<br>
+	<a href="SearchQuestion.jsp">Search for Questions</a>
+	<br>
+	<br>
 <a href="Logout.jsp">Logout</a>
 
 </body>

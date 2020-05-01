@@ -9,15 +9,17 @@
 	ResultSet representative=null;
 	ResultSet available = null;
 	boolean selected = true;
+	ResultSet route = null;
 	
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
+
 <title>Reservation</title>
 </head>
-
+	
 	<%	
 		if(session.getAttribute("username") == null){
 			out.print("Please log in first.");
@@ -30,6 +32,25 @@
 			allCitySet = stmt.executeQuery("SELECT city,state FROM TrainTicketing.Station;");
 			
 	%>
+	<!-- <script type="text/javascript">
+		function setOrigion(){
+			//var value = selectObject.value;
+			var sel = document.getElementsByName("Origin");
+			var index = sel.selectedIndex;
+			
+			//var selvalue = sel.options[sel.options.selectedIndex].value;
+			alter(sel);
+		}
+	</script>
+	
+	<script type="text/javascript">
+		function setDestination(){
+			//var value = selectObject.value;
+			var sel = document.getElementsByName("Destination").value;
+			//var selvalue = sel.options[sel.options.selectedIndex].value;
+			return sel;
+		}
+	</script> -->
 	<form method="post" action="reservationProcess.jsp">
 	<h1>Reservation</h1>
 
@@ -39,6 +60,7 @@
 			<option><%= allCitySet.getString(1) + "-" + allCitySet.getString(2) %></option>
 		<%}%> 
 		</select>
+		
 	
 		<br>
 		<div><b>Destination:</b></div>
@@ -54,7 +76,7 @@
 			allCitySet.close();
 		%>
 		</select>
-		<%
+		<%-- <%
 			String origin_info = request.getParameter("Origin");
 			String destination_info = request.getParameter("Destination");
 			if(origin_info == null && destination_info == null) selected = false;
@@ -65,7 +87,27 @@
 				available = ps.executeQuery();
 			}
 			date = stmt.executeQuery("SELECT departure_time FROM TrainTicketing.Stop");
-		%>
+		%> --%>
+		<%-- <script type="text/javascript">
+			function setOrigin(){
+				var oSelected = document.getElementById('Origin').value;
+				//var selectValue = oSelected.options[oSelected.selectedIndex].value;
+				session.setAttribute("Origin",oSelected);
+			}
+		</script>
+		<%
+			String temp2 = (String)session.getAttribute("Origin");
+		%> --%>
+		<br>
+		<div><b>Transit Line</b></div>
+		<select name="Transit_line">
+		<%
+			route = stmt.executeQuery("select transit_line_name from TrainTicketing.Train_schedule");
+			while(route.next()){%>
+				<option><%=route.getString(1)%></option>
+		<%} %>
+		
+		</select>
 		
 		<br>
 		<div><b>Departure Date</b></div>
@@ -84,7 +126,9 @@
 				<option><%=temp %></option>
 				
 			<%} %>
-		
+		<%
+			
+		%>
 		
 		</select>
 		<%-- <input type="date" name="Date" value =<%=LocalDate.now().toString() %> min=LocalDate.now() max=LocalDate.now().plusDays(30) > --%>
@@ -104,6 +148,12 @@
 			<%date.close(); %>
 		<%} %>
 		</select> --%>
+		<!-- <br>
+		<b>Departure Time</b>
+		<select>
+			
+		</select> -->
+		
 		<br>
 		<div><b>Class:</b></div>
 		<select name="Class">
@@ -139,10 +189,10 @@
 		<select name="Representative">
 			<option>None</option>
 			<%
-				representative = stmt.executeQuery("select e.First_name,e.last_name from TrainTicketing.Employee e, TrainTicketing.Customer_representative c where e.SSN = c.SSN;");
+				representative = stmt.executeQuery("select e.First_name,e.last_name, e.username from TrainTicketing.Employee e, TrainTicketing.Customer_representative c where e.SSN = c.SSN;");
 			%>
 			<% while(representative.next()){ %>
-				<option><%= representative.getString(1) + " " + representative.getString(2) %> </option>
+				<option><%= representative.getString(1) + " " + representative.getString(2) + " (username: "+ representative.getString(3)+")"%> </option>
 			<%}%>
 			<%representative.close();%>
 		

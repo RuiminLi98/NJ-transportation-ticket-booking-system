@@ -44,29 +44,56 @@
 						//session.setAttribute("Discount",discount);
 						String representative = request.getParameter("Representative");
 						//session.setAttribute("Representative",representative);
+						String transit_line = request.getParameter("Transit_line");
 						int ssn =0;
 						boolean assist = false;
 						if(!representative.equals("None")){
 							String[] splited = representative.split(" ");
 							String repFirstName = splited[0];
 							String repLastName = splited[1];
-							ResultSet rep = stmt.executeQuery("SELECT SSN FROM TrainTicketing.Employee where First_name='"+repFirstName+"'and last_name='"+repLastName+"';");
+							String temp = splited[3];
+							String cpusername = temp.substring(0,temp.length()-1);
+							String cpusernameSQL = "SELECT SSN FROM TrainTicketing.Employee where First_name='"+repFirstName+"'and last_name='"+repLastName+"' and username='"+cpusername+"';";
+							ResultSet rep = stmt.executeQuery(cpusernameSQL);
 							rep.next();
 							ssn = rep.getInt("SSN");
 							rep.close();
 							assist = true;
 						}
 						double booking_fee = 1.0;
-						PreparedStatement ps = con.prepareStatement(Tools.big_query);
+						/* PreparedStatement ps = con.prepareStatement(Tools.big_query);
 						ps.setString(1, depart.split("-")[0]);
 						ps.setString(2, arrival.split("-")[0]);
-						ResultSet reservation = ps.executeQuery();
-						Timestamp today = new Timestamp(System.currentTimeMillis());
-						if(reservation.next()){
-						int train_id = reservation.getInt(1);
-						String train_line_name = reservation.getString(2);
-						int origin_id = reservation.getInt(7);
-						int destination_id = reservation.getInt(8);
+						ResultSet reservation = ps.executeQuery(); */
+						Timestamp today = new Timestamp(System.currentTimeMillis());	
+						String findOrigin = "SELECT station_ID FROM TrainTicketing.Station WHERE city='"+depart.split("-")[0]+"' and state='"+depart.split("-")[1]+"';";
+						ResultSet originRS = stmt.executeQuery(findOrigin);
+						int dep_station_id=0;
+						if(originRS.next()){
+							dep_station_id = originRS.getInt(1);
+						}
+						originRS.close();
+						
+						String findDestination = "SELECT station_ID FROM TrainTicketing.Station WHERE city='"+arrival.split("-")[0]+"' and state='"+arrival.split("-")[1]+"';";
+						ResultSet destRS = stmt.executeQuery(findDestination);
+						int arr_station_id = 0;
+						if(destRS.next()){
+							arr_station_id = destRS.getInt(1);
+						}
+						destRS.close();
+						
+						ResultSet checkTransitLine = stmt.executeQuery("select transit_line_name, train_ID from TrainTicketing.Stop where station_ID="+dep_station_id+" and transit_line_name = '"+transit_line+"' and transit_line_name in (select transit_line_name from TrainTicketing.Stop where station_ID="+arr_station_id+" and transit_line_name ='"+ transit_line+"')");
+						if(!checkTransitLine.next()){
+							
+							checkTransitLine.close();
+							response.sendRedirect("ReservationFail.jsp");
+							return;
+						}
+						
+						
+						int train_id = checkTransitLine.getInt(2);
+						checkTransitLine.close();
+						
 						Date origin_date = Date.valueOf(request.getParameter("Date"));
 						/* ResultSet dest_rs = stmt.executeQuery("SELECT arrival_time from TrainTicketing.Stop where station_ID ="+destination_id+";");
 						dest_rs.next(); */
@@ -74,7 +101,7 @@
 						//out.print(reservation.getString(2));
 						//reservation.close();
 						if(ticketClass.equals("Economy")){
-							ResultSet econFare = stmt.executeQuery("SELECT * FROM TrainTicketing.Economy_fare where transit_line_name ='"+reservation.getString(2)+"';");
+							ResultSet econFare = stmt.executeQuery("SELECT * FROM TrainTicketing.Economy_fare where transit_line_name ='"+transit_line+"';");
 							econFare.next();
 							 if(type.equals("One Way")){
 								 fare = econFare.getFloat("one_way_fee");
@@ -87,7 +114,7 @@
 							 }
 							 econFare.close();
 						}else if(ticketClass.equals("Business")){
-							ResultSet bussFare = stmt.executeQuery("SELECT * FROM TrainTicketing.Business_fare where transit_line_name ='"+reservation.getString(2)+"';");
+							ResultSet bussFare = stmt.executeQuery("SELECT * FROM TrainTicketing.Business_fare where transit_line_name ='"+transit_line+"';");
 							bussFare.next();
 							 if(type.equals("One Way")){
 								 fare = bussFare.getFloat(4);
@@ -100,7 +127,7 @@
 							 }
 							 bussFare.close();
 						}else{
-							ResultSet firstFare = stmt.executeQuery("SELECT * FROM TrainTicketing.First_fare where transit_line_name ='"+reservation.getString(2)+"';");
+							ResultSet firstFare = stmt.executeQuery("SELECT * FROM TrainTicketing.First_fare where transit_line_name ='"+transit_line+"';");
 							firstFare.next();
 							if(type.equals("One Way")){
 								 fare = firstFare.getFloat(4);
@@ -113,7 +140,7 @@
 							 }
 							firstFare.close();
 						}
-						ResultSet discountRs = stmt.executeQuery("SELECT * FROM TrainTicketing.Fare where transit_line_name ='"+reservation.getString(2)+"';");
+						ResultSet discountRs = stmt.executeQuery("SELECT * FROM TrainTicketing.Fare where transit_line_name ='"+transit_line+"';");
 						discountRs.next();
 						if(discount.equals("Senior")){
 							discountNum = discountRs.getFloat(2);
@@ -124,7 +151,7 @@
 						}
 						discountRs.close();
 						
-						String findAvailable = "SELECT available_number_of_seats FROM TrainTicketing.Train_schedule WHERE train_ID="+train_id+" and transit_line_name='"+train_line_name+"';";
+						String findAvailable = "SELECT available_number_of_seats FROM TrainTicketing.Train_schedule WHERE train_ID="+train_id+" and transit_line_name='"+transit_line+"';";
 						ResultSet findAva = stmt.executeQuery(findAvailable);
 						int available = 0;
 						if(findAva.next()){
@@ -152,9 +179,9 @@
 						total_fare = fare*discountNum*seatnum+booking_fee;
 						String sql;
 						if(assist){
-							sql = "INSERT INTO TrainTicketing.Reservation(total_fare,seat_number, class, booking_fee, reservation_date,dep_Train_ID, dep_Transit_line_name, dep_Station_ID, dep_Date, arr_Train_ID,arr_Transit_line_name, arr_Station_ID, arr_date, assist_representative_SSN, customer_Username, type, discount) values ("+total_fare+","+seatnum+",'"+ticketClass+"',"+booking_fee+","+"?,"+train_id+",'"+train_line_name+"',"+origin_id+","+"?,"+train_id+",'"+train_line_name+"',"+destination_id+","+"?,"+ssn+",'"+username_str+"','"+type+"','"+discount+"'"+");";
+							sql = "INSERT INTO TrainTicketing.Reservation(total_fare,seat_number, class, booking_fee, reservation_date,dep_Train_ID, dep_Transit_line_name, dep_Station_ID, dep_Date, arr_Train_ID,arr_Transit_line_name, arr_Station_ID, arr_date, assist_representative_SSN, customer_Username, type, discount) values ("+total_fare+","+seatnum+",'"+ticketClass+"',"+booking_fee+","+"?,"+train_id+",'"+transit_line+"',"+dep_station_id+","+"?,"+train_id+",'"+transit_line+"',"+arr_station_id+","+"?,"+ssn+",'"+username_str+"','"+type+"','"+discount+"'"+");";
 						}else{
-							sql = "INSERT INTO TrainTicketing.Reservation(total_fare,seat_number, class, booking_fee, reservation_date,dep_Train_ID, dep_Transit_line_name, dep_Station_ID, dep_Date, arr_Train_ID,arr_Transit_line_name, arr_Station_ID, arr_date,customer_Username, type, discount) values ("+total_fare+","+seatnum+",'"+ticketClass+"',"+booking_fee+","+"?,"+train_id+",'"+train_line_name+"',"+origin_id+","+"?,"+train_id+",'"+train_line_name+"',"+destination_id+","+"?"+",'"+username_str+"','"+type+"','"+discount+"'"+");";
+							sql = "INSERT INTO TrainTicketing.Reservation(total_fare,seat_number, class, booking_fee, reservation_date,dep_Train_ID, dep_Transit_line_name, dep_Station_ID, dep_Date, arr_Train_ID,arr_Transit_line_name, arr_Station_ID, arr_date,customer_Username, type, discount) values ("+total_fare+","+seatnum+",'"+ticketClass+"',"+booking_fee+","+"?,"+train_id+",'"+transit_line+"',"+dep_station_id+","+"?,"+train_id+",'"+transit_line+"',"+arr_station_id+","+"?"+",'"+username_str+"','"+type+"','"+discount+"'"+");";
 						}
 						PreparedStatement pstmt = con.prepareStatement(sql);
 						pstmt.setTimestamp(1,today);
@@ -186,11 +213,9 @@
 							con.close();
 							response.sendRedirect("SuccessfulReservation.jsp");
 						} */
-						reservation.close();
-						}else{
-							response.sendRedirect("ReservationFail.jsp");
-							return;
-						}
+						
+						
+				
 						
 						
 					/* }else{
