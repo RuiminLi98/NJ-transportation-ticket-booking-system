@@ -96,38 +96,44 @@
 		discountRs.close();
 	
 		total_fare = fare*discountNum*seatnum+booking_fee;
-		String sql;
-		if(assist){
-			sql = "INSERT INTO TrainTicketing.Reservation(total_fare,seat_number, class, booking_fee, reservation_date,dep_Train_ID, dep_Transit_line_name, dep_Station_ID, dep_Date, arr_Train_ID,arr_Transit_line_name, arr_Station_ID, arr_date, assist_representative_SSN, customer_Username, type, discount) values ("+total_fare+","+seatnum+",'"+ticketClass+"',"+booking_fee+","+"?,"+train_ID+",'"+transit_line_name+"',"+dep_station_id+","+"?,"+train_ID+",'"+transit_line_name+"',"+arr_station_id+","+"?,"+ssn+",'"+username_str+"','"+type+"','"+discount+"'"+");";
-		}else{
-			sql = "INSERT INTO TrainTicketing.Reservation(total_fare,seat_number, class, booking_fee, reservation_date,dep_Train_ID, dep_Transit_line_name, dep_Station_ID, dep_Date, arr_Train_ID,arr_Transit_line_name, arr_Station_ID, arr_date,customer_Username, type, discount) values ("+total_fare+","+seatnum+",'"+ticketClass+"',"+booking_fee+","+"?,"+train_ID+",'"+transit_line_name+"',"+dep_station_id+","+"?,"+train_ID+",'"+transit_line_name+"',"+arr_station_id+","+"?"+",'"+username_str+"','"+type+"','"+discount+"'"+");";
-		}
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setTimestamp(1,today);
-		pstmt.setDate(2,origin_date);
-		pstmt.setDate(3,destination_date);
-		try{
-		pstmt.executeUpdate();}
-		catch(Exception exp){out.println("The input information is not correct");return;}
+		
 		String findSeat = "SELECT total_number_of_seats FROM TrainTicketing.Train WHERE train_ID="+train_ID+";";
-		ResultSet oldSeat = stmt.executeQuery(findSeat);
-		oldSeat.next();
-		int oldSeatNum = oldSeat.getInt(1);
-		int newSeatNum = oldSeatNum - seatnum;
-		oldSeat.close();
-		if(newSeatNum < 0){
-			out.print("I can reserve at most "+oldSeatNum+ " seats.");
+		ResultSet totalSeat = stmt.executeQuery(findSeat);
+		totalSeat.next();
+		int totalSeatNum = totalSeat.getInt(1);
+		totalSeat.close();
+		PreparedStatement pFindR = con.prepareStatement("SELECT SUM(seat_number) FROM TrainTicketing.Reservation WHERE dep_train_ID = ? AND dep_Transit_line_name = ? AND dep_date = ?;");
+		pFindR.setInt(1,train_ID);
+		pFindR.setString(2,transit_line_name);
+		pFindR.setDate(3,origin_date);
+		ResultSet reservedSeat = pFindR.executeQuery();
+		reservedSeat.next();
+		int reservedSeatNum = reservedSeat.getInt(1);
+		if(totalSeatNum - reservedSeatNum < seatnum){
+			out.print("I can reserve at most "+ Integer.toString(totalSeatNum - reservedSeatNum) + " seats.");
 			stmt.close();
 			con.close();
 			return;
 		}else{
-			String updateSeat = "UPDATE TrainTicketing.Train SET total_number_of_seats="+newSeatNum+" WHERE train_ID ="+train_ID+";";
+			//String updateSeat = "UPDATE TrainTicketing.Train SET total_number_of_seats="+newSeatNum+" WHERE train_ID ="+train_ID+";";
 			//int insert = stmt.executeUpdate(insertQuery);
-			try{
-			int update = stmt.executeUpdate(updateSeat);
-			}catch(Exception e){
-				out.println("The input information is incorrect");return;
+// 			try{
+// 			int update = stmt.executeUpdate(updateSeat);
+// 			}catch(Exception e){
+// 				out.println("The input information is incorrect");return;
+// 			}
+			String sql;
+			if(assist){
+				sql = "INSERT INTO TrainTicketing.Reservation(total_fare,seat_number, class, booking_fee, reservation_date,dep_Train_ID, dep_Transit_line_name, dep_Station_ID, dep_Date, arr_Train_ID,arr_Transit_line_name, arr_Station_ID, arr_date, assist_representative_SSN, customer_Username, type, discount) values ("+total_fare+","+seatnum+",'"+ticketClass+"',"+booking_fee+","+"?,"+train_ID+",'"+transit_line_name+"',"+dep_station_id+","+"?,"+train_ID+",'"+transit_line_name+"',"+arr_station_id+","+"?,"+ssn+",'"+username_str+"','"+type+"','"+discount+"'"+");";
+			}else{
+				sql = "INSERT INTO TrainTicketing.Reservation(total_fare,seat_number, class, booking_fee, reservation_date,dep_Train_ID, dep_Transit_line_name, dep_Station_ID, dep_Date, arr_Train_ID,arr_Transit_line_name, arr_Station_ID, arr_date,customer_Username, type, discount) values ("+total_fare+","+seatnum+",'"+ticketClass+"',"+booking_fee+","+"?,"+train_ID+",'"+transit_line_name+"',"+dep_station_id+","+"?,"+train_ID+",'"+transit_line_name+"',"+arr_station_id+","+"?"+",'"+username_str+"','"+type+"','"+discount+"'"+");";
 			}
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setTimestamp(1,today);
+			pstmt.setDate(2,origin_date);
+			pstmt.setDate(3,destination_date);
+			try{pstmt.executeUpdate();}
+			catch(Exception exp){out.println("The input information is not correct");return;}
 			stmt.close();
 			con.close();
 			response.sendRedirect("customer_representative_SuccessfulReservation.jsp");
