@@ -6,6 +6,9 @@
 	ResultSet dates = null;
 	ResultSet allCitySet = null;
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,6 +67,8 @@
 				<option value="available" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("available"))? "selected" : "" %>>available</option>
 				<option value="date" <%= (request.getParameter("sort") != null && request.getParameter("sort").equals("date"))? "selected" : "" %>>date</option>
 		</select>
+		<br>
+		<br>
 		<input type="date" id="start" name="depature_date" value=<%= request.getParameter("depature_date") == null? Tools.getTodayDateString() : request.getParameter("depature_date") %> min=<%=Tools.getTodayDateString() %>>        
 		
         <b>approximate search date:</b>
@@ -71,6 +76,11 @@
 		
 		<input type="submit" value="search">
 </form>
+<form action="Welcome_Customer.jsp">	
+	<input type="submit" value="back">
+</form>
+<br>
+<br>
 <%
 	ResultSet reservation_count = 
 	stmt.executeQuery("select dep_Train_ID, dep_Transit_line_name, sum(seat_number), dep_date from Reservation group by dep_Train_ID, dep_Transit_line_name, dep_date;");
@@ -99,6 +109,7 @@
 		ps.close();
 	}
 %>
+
 <body>
 	<table>
 	<thead>
@@ -120,6 +131,11 @@
 		</tr>
 		<%= Tools.toHtml(tuples) %>
 	</table>
+<%  if(tuples.size() == 0){ %>
+	<br><br>
+	<h2 style="text-align:center">NO MATCHED RESULT</h2>
+	<h2 style="text-align:center">FOR CHOSEN ORIGIN, DESTINATION AND DATE</h2>
+<% } %>
 <%
 	//close connection
 	dates.close();

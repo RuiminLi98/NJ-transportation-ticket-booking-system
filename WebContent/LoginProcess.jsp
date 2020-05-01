@@ -53,7 +53,7 @@
 					response.sendRedirect("Admin_AdminHome.jsp");
 				}
 				else{
-				response.sendRedirect("Welcome_"+user_type_str + ".jsp");
+					response.sendRedirect("Welcome_"+user_type_str + ".jsp");
 				}return;
 			}else{
 				out.print("login failed");
