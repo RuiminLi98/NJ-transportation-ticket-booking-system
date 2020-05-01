@@ -45,10 +45,10 @@
         </table>
         <input type="submit" value="Submit" /></form>
 	<sql:query dataSource = "${snapshot}" var = "result">
-      select r.*, c.*, concat(class, '') as reservationclass from Reservation r, Customer c where dep_Transit_line_name='<%=request.getParameter("transitline")== null ? "Rutgers line" : request.getParameter("transitline")%>' AND dep_Train_ID=<%=request.getParameter("trainnumber")== null ? "1000" : request.getParameter("trainnumber")%> and r.customer_Username=c.username;
+      select r.*, c.*, concat(class, '') as reservationclass from Reservation r, Customer c where dep_Transit_line_name='<%=request.getParameter("transitline")== null ? "train" : request.getParameter("transitline")%>' AND dep_Train_ID=<%=request.getParameter("trainnumber")== null ? "0000" : request.getParameter("trainnumber")%> and r.customer_Username=c.username;
    	</sql:query>
    	<hr>
-   	<h2>Result: List of Reservations by <%=request.getParameter("transitline")== null ? "Rutgers line" : request.getParameter("transitline")%> #<%=request.getParameter("trainnumber")== null ? "1000" : request.getParameter("trainnumber")%></h2>
+   	<h2>Result: List of Reservations by <%=request.getParameter("transitline")== null ? "train" : request.getParameter("transitline")%> #<%=request.getParameter("trainnumber")== null ? "0000" : request.getParameter("trainnumber")%></h2>
    	<hr>
    	<table border = "1" width = "100%">
       <tr>

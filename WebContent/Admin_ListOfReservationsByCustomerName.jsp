@@ -45,10 +45,10 @@
         </table>
         <input type="submit" value="Submit" /></form>
 	<sql:query dataSource = "${snapshot}" var = "result">
-      select r.*, c.*, concat(class, '') as xxxx from Reservation r, Customer c where first_name='<%=request.getParameter("firstname")== null ? "John" : request.getParameter("firstname")%>' AND last_name='<%=request.getParameter("lastname")== null ? "Smith" : request.getParameter("lastname")%>' and r.customer_Username=c.username;
+      select r.*, c.*, concat(class, '') as xxxx from Reservation r, Customer c where first_name='<%=request.getParameter("firstname")== null ? "some" : request.getParameter("firstname")%>' AND last_name='<%=request.getParameter("lastname")== null ? "one" : request.getParameter("lastname")%>' and r.customer_Username=c.username;
    	</sql:query>
    	<hr>
-   	<h2>Result: List of Reservations by <%=request.getParameter("firstname")== null ? "John" : request.getParameter("firstname")%> <%=request.getParameter("lastname")== null ? "Smith" : request.getParameter("lastname")%></h2>
+   	<h2>Result: List of Reservations by <%=request.getParameter("firstname")== null ? "some" : request.getParameter("firstname")%> <%=request.getParameter("lastname")== null ? "one" : request.getParameter("lastname")%></h2>
    	<hr>
    	<table border = "1" width = "100%">
       <tr>
