@@ -38,6 +38,14 @@
 <title>Edit Reservation</title>
 </head>
 <body>
+<br>
+<%
+	if(session.getAttribute("username") ==null){
+%>
+<a href="Login.jsp">Back to Log in Page</a>
+<%}else{%>
+<a href="Welcome_Customer.jsp">Back to Welcome Page</a>
+<%} %>
 <form method="post" action="EditReservationProcess.jsp?reservation_num=<%=Integer.parseInt(request.getParameter("reservation"))%>">
 	<h1>Reservation Details</h1>
 	<%
@@ -51,6 +59,7 @@
 		query = "SELECT * FROM TrainTicketing.Reservation WHERE reservation_number="+rsid+";";
 		rs = stmt.executeQuery(query);
 	%>
+	
 		
 	<% 		rs.next();
 			total_fare = rs.getFloat(1);

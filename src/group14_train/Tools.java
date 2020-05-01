@@ -230,11 +230,7 @@ public class Tools {
 				break;
 			case "destination_departure_time":
 				Collections.sort(list,new Comparator<QueryResultTuple>() {
-					public int compare(QueryResultTuple arg0, QueryResultTuple arg1) {
-							String s1 = arg0.getDestination_departure_time() == null? "null" : arg0.getDestination_departure_time().toString();
-							String s2 = arg1.getDestination_departure_time() == null? "null" : arg1.getDestination_departure_time().toString();
-							return s1.compareTo(s2);
-						}});
+					public int compare(QueryResultTuple arg0, QueryResultTuple arg1) {return arg0.getDestination_departure_time().compareTo(arg1.getDestination_departure_time());}});
 				break;
 			case "economy_fare":
 				Collections.sort(list,new Comparator<QueryResultTuple>() {
@@ -273,6 +269,17 @@ public class Tools {
 		}else if(a1 < a2) {
 			return -1;
 		}else	return 0;
+	}
+	
+	public static int findUsername(String name) {
+		int idx = 0;
+		for(int i=0; i< name.length();i++) {
+			if(name.substring(i,i+1).equals(":")) {
+				idx = i+2;
+				break;
+			}
+		}
+		return idx;
 	}
 	
 	public static String getTodayDateString() {

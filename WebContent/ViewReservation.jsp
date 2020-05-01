@@ -77,6 +77,14 @@ int ID;
 				</tr>
 			<%} %>
 		</table>
+		<br>
+<%
+	if(session.getAttribute("username") ==null){
+%>
+<a href="Login.jsp">Back to Log in Page</a>
+<%}else{%>
+<a href="Welcome_Customer.jsp">Back to Welcome Page</a>
+<%} %>
 		<%
 		rs.close();
 		stmt.close();
