@@ -48,6 +48,6 @@
 <h2>Top Transit Lines</h2>
 	<a href="Admin_TopFiveActiveTransitLines.jsp">Top 5 Active Transit Lines</a>
 <h2>Exit</h2>
-	<a href="Login.jsp">exit</a>
+	<a href="Login.jsp">Exit</a>
 </body>
 </html>
