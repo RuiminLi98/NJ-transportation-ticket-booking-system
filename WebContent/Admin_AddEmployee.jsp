@@ -76,13 +76,20 @@ All forms must be filled.
 				+ request.getParameter("lastName") + "', '"
 				+ request.getParameter("username") + "', '"
 				+ request.getParameter("password") + "');";
+				
 				System.out.println(sqlStr);
 				int resultCode;
 				try{
 					resultCode = stmt.executeUpdate(sqlStr);				
 				}catch(Exception e){
 					resultCode = -999;								
-				}			
+				}
+				String sql_temp="insert into Customer_representative values("+request.getParameter("SSN")+")";
+				try{
+					resultCode = stmt.executeUpdate(sql_temp);				
+				}catch(Exception e){
+					resultCode = -999;								
+				}
 				stmt.close();
 				conn.close();
 				System.out.println(resultCode);
