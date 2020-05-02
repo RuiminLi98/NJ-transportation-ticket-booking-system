@@ -29,23 +29,19 @@
       user = "admin"  password = "Group14!"/>
 
    <sql:query dataSource = "${snapshot}" var = "result">
-      select customer_Username, count(*) as reservations
-		from Reservation
-		group by customer_Username
-		order by count(*) desc
-		limit 1;
+      SELECT customer_Username,SUM(total_fare) AS Total_fare FROM TrainTicketing.Reservation GROUP BY customer_Username ORDER BY SUM(total_fare) DESC LIMIT 1;
    </sql:query>
 
    <table border = "1" width = "100%">
       <tr>
          <th>Customer Name</th>
-         <th># of Reservations</th>         
+         <th>Total fare</th>         
       </tr>
       
       <c:forEach var = "row" items = "${result.rows}">
          <tr>
             <td><c:out value = "${row.customer_Username}"/></td>
-            <td><c:out value = "${row.reservations}"/></td>            
+            <td><c:out value = "${row.Total_fare}"/></td>            
          </tr>
       </c:forEach>
    </table>
