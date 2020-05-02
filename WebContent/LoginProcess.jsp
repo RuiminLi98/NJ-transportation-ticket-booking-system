@@ -29,8 +29,11 @@
 			if(user_type_str.equals("Customer")){
 				query = "select * from Customer where username='"+ username_str + 
 						"' and password='" + password_str + "';";
-			}else{
-				query = "select * from "+ user_type_str +" as x, Employee as e where (e.username='"+ username_str +"' AND e.password='"+ password_str +"');";
+			}else if(user_type_str.equals("Customer_representative")){
+				query = "select * from "+ user_type_str +" x, Employee e where (e.username='"+ username_str +"' AND e.password='"+ password_str +"' AND x.SSN = e.SSN);";
+			}
+			else if(user_type_str.equals("Site_manager")){
+				query = "select * from "+ user_type_str +" x, Employee e where (e.username='"+ username_str +"' AND e.password='"+ password_str +"' AND x.SSN = e.SSN);";
 			}
 			
 			//ask sql
