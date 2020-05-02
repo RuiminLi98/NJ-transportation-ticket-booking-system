@@ -94,8 +94,8 @@ All forms must be filled.
 				conn.close();
 				System.out.println(resultCode);
 				String responseMsg = resultCode == -999 ? "No new employee has been" : "New employee: " + request.getParameter("username");
-				out.print(responseMsg);
-			}%> added.
+				out.print(responseMsg+" added");
+			}%>  
 		</div>
 </body>
 </html>
