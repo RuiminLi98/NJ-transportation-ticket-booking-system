@@ -39,43 +39,43 @@ All forms must be filled.
         <table style="with: 50%">
         	<tr>
                 <td>First Name</td>
-                <td><input type="text" name="firstName" /></td>
+                <td><input type="text" name="firstName"  min= 1 required/></td>
             </tr>
             <tr>
                 <td>Last Name</td>
-                <td><input type="text" name="lastName" /></td>
+                <td><input type="text" name="lastName"  min= 1 required/></td>
             </tr>
             <tr>
                 <td>UserName</td>
-                <td><input type="text" name="username" /></td>
+                <td><input type="text" name="username"  min= 1 required/></td>
             </tr>
             <tr>
                 <td>Password</td>
-                <td><input type="password" name="password" /></td>
+                <td><input type="password" name="password"  min= 1 required/></td>
             </tr>
             <tr>
                 <td>Email</td>
-                <td><input type="text" name="email" /></td>
+                <td><input type="text" name="email"  min= 1 required/></td>
             </tr>
             <tr>
                 <td>Address</td>
-                <td><input type="text" name="address" /></td>
+                <td><input type="text" name="address"  min= 1 required/></td>
             </tr>
             <tr>
                 <td>City</td>
-                <td><input type="text" name="city" /></td>
+                <td><input type="text" name="city"  min= 1 required/></td>
             </tr>
             <tr>
                 <td>State</td>
-                <td><input type="text" name="state" /></td>
+                <td><input type="text" name="state"  min= 1 required/></td>
             </tr>
             <tr>
                 <td>Zip Code</td>
-                <td><input type="number" name="zipcode" /></td>
+                <td><input type="number" name="zipcode"  min= 1 required /></td>
             </tr>
             <tr>
                 <td>Telephone</td>
-                <td><input type="number" name="telephone" /></td>
+                <td><input type="number" name="telephone"  min= 1 required/></td>
             </tr>
         </table>
         <input type="submit" value="Submit" /></form>

@@ -36,11 +36,11 @@
         <table style="with: 50%">
             <tr>
                 <td>First Name</td>
-                <td><input type="text" name="firstname" /></td>
+                <td><input type="text" name="firstname" min= 1 required/></td>
             </tr>
             <tr>
                 <td>Last Name</td>
-                <td><input type="text" name="lastname" /></td>
+                <td><input type="text" name="lastname" min= 1 required/></td>
             </tr>
         </table>
         <input type="submit" value="Submit" /></form>

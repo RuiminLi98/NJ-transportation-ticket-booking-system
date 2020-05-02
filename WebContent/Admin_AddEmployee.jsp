@@ -39,23 +39,23 @@ All forms must be filled.
         <table style="with: 50%">
         	<tr>
                 <td>SSN</td>
-                <td><input type="number" name="SSN" /></td>
+                <td><input type="number" name="SSN"  min= 1 required/></td>
             </tr>
             <tr>
                 <td>First Name</td>
-                <td><input type="text" name="firstName" /></td>
+                <td><input type="text" name="firstName"  min= 1 required/></td>
             </tr>
             <tr>
                 <td>Last Name</td>
-                <td><input type="text" name="lastName" /></td>
+                <td><input type="text" name="lastName"  min= 1 required/></td>
             </tr>
             <tr>
                 <td>UserName</td>
-                <td><input type="text" name="username" /></td>
+                <td><input type="text" name="username"  min= 1 required/></td>
             </tr>
             <tr>
                 <td>Password</td>
-                <td><input type="password" name="password" /></td>
+                <td><input type="password" name="password"  min= 1 required/></td>
             </tr>
         </table>
         <input type="submit" value="Submit" /></form>

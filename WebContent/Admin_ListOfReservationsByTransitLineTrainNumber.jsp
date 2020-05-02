@@ -36,11 +36,11 @@
         <table style="with: 50%">
             <tr>
                 <td>Transit Line Name</td>
-                <td><input type="text" name="transitline" /></td>
+                <td><input type="text" name="transitline" min= 1 required/></td>
             </tr>
             <tr>
                 <td>Train Number(number only)</td>
-                <td><input type="number" name="trainnumber" /></td>
+                <td><input type="number" name="trainnumber" min= 1 required/></td>
             </tr>
         </table>
         <input type="submit" value="Submit" /></form>
