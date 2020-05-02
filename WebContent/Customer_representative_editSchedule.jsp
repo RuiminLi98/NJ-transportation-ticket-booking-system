@@ -18,7 +18,7 @@
 <title>Add Schedule</title>
 </head>
 <body>
-<h1>add information of train schedule</h1>
+<h1>edit information of train schedule</h1>
 	<%	
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();
