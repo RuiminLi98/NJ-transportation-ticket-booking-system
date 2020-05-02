@@ -47,5 +47,7 @@
 	<a href="Admin_BestCustomer.jsp">Best Customer</a>
 <h2>Top Transit Lines</h2>
 	<a href="Admin_TopFiveActiveTransitLines.jsp">Top 5 Active Transit Lines</a>
+<h2>exit</h2>
+	<a href="Login.jsp">exit</a>
 </body>
 </html>
